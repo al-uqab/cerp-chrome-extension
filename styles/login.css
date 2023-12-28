@@ -13,7 +13,7 @@ body {
     justify-content: center;
 }
 
-.container {
+.login {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -24,13 +24,13 @@ body {
     width: 374px;
 }
 
-header {
+.login__header {
     align-items: center;
     display: flex;
     flex-direction: column;
 }
 
-header::after {
+.login__header::after {
     background-image: url("../images/header-abstract-shape.svg");
     background-position: top right;
     background-repeat: no-repeat;
@@ -40,7 +40,7 @@ header::after {
     width: 100%;
 }
 
-header h3 {
+.login__title {
     color: #14213d80;
     font-size: 12px;
     font-weight: 400;
@@ -49,19 +49,19 @@ header h3 {
     width: 160px;
 }
 
-.content {
+.login__content {
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    max-width: 225px;
     padding-top: 60px;
     row-gap: 10px;
     width: 90%;
     z-index: 1;
-    max-width: 225px;
 }
 
-.content .btn-loign-with-google {
+.login__btn--google {
     align-items: center;
     background-color: #fff;
     border: 1px solid #0000001a;
@@ -76,79 +76,82 @@ header h3 {
     width: 100%;
 }
 
-.content .btn-loign-with-google img {
+.login__btn--google .login__btn-icon {
     margin-right: 10px;
 }
 
-.content .or {
+.login__or {
     align-items: center;
     display: flex;
     justify-content: center;
 }
 
-.content .line {
+.login__line {
     background-color: #9993;
     height: 1px;
     width: 50px;
 }
 
-.line-left {
+.login__line--left {
     margin-right: 3px;
 }
 
-.line-right {
+.login__line--right {
     margin-left: 3px;
 }
 
-.content .or-word {
+.login__or-word {
     color: #eb1e4b;
     display: inline-block;
     font-size: 12px;
     font-weight: 500;
 }
 
-.content form {
+.login__form {
     column-gap: 40px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    max-width: 225px;
     row-gap: 25px;
     width: 100%;
-    max-width: 225px;
 }
 
-.content form div {
+.login__field {
     display: flex;
     flex-direction: column;
 }
 
-.content form label {
+.login__label {
     color: #14213d;
     font-size: 12px;
     font-weight: 400;
     margin-bottom: 5px;
 }
 
-.content form input {
+.login__input {
     border: 1px solid rgba(0, 0, 0, 0.10);
     border-radius: 5px;
     padding: 10px;
+    width: 100%;
 }
 
-.content form .title {
+.login__title {
     align-items: center;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
 }
 
-.content form .title .reset {
+.login__reset {
     color: #e42256;
     cursor: pointer;
     font-size: 9px;
     font-weight: 400;
 }
 
-.content form .btn {
+.login__btn--signin {
     background: #e42256;
     border: none;
     border-radius: 10px;
@@ -160,13 +163,13 @@ header h3 {
     padding: 10px;
 }
 
-.content p {
+.login__text {
     color: #14213d80;
     font-size: 12px;
     font-weight: 400;
 }
 
-.content p span {
+.login__signup {
     color: #e42256;
     cursor: pointer;
     display: block;

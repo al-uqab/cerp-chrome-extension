@@ -7,43 +7,43 @@
     <link rel="stylesheet" href="styles/login.css">
 </head>
 <body>
-<div class="container">
-    <header>
-        <div class="content">
-            <div class="logo">
-                <img alt="logo" src="images/logo.png">
+<div class="login">
+    <header class="login__header">
+        <div class="login__content">
+            <div class="login__logo">
+                <img class="login__logo-img" alt="logo" src="images/logo.png">
             </div>
-            <h3>The Enterprise Resource Planning software.</h3>
+            <h3 class="login__title">The Enterprise Resource Planning software.</h3>
         </div>
     </header>
 
-    <div class="content">
-        <button class="btn-loign-with-google">
-            <img alt="Google icon" src="images/google-icon.svg">
+    <div class="login__content">
+        <button class="login__btn login__btn--google">
+            <img class="login__btn-icon" alt="Google icon" src="images/google-icon.svg">
             Continue with Google
         </button>
-        <div class="or">
-            <span class="line line-left"></span>
-            <span class="or-word">or</span>
-            <span class="line line-right"></span>
+        <div class="login__or">
+            <span class="login__line login__line--left"></span>
+            <span class="login__or-word">or</span>
+            <span class="login__line login__line--right"></span>
         </div>
-        <form>
-            <div class="username">
-                <label for="email">E-mail</label>
-                <input id="email" class="email" type="email">
+        <form class="login__form">
+            <div class="login__field login__field--username">
+                <label class="login__label" for="email">E-mail</label>
+                <input id="email" class="login__input login__input--email" type="email">
             </div>
-            <div class="password">
-                <div>
-                    <div class="title">
-                        <label for="password">Password</label>
-                        <span class="reset">Reset Password</span>
+            <div class="login__field login__field--password">
+                <div class="login__password">
+                    <div class="login__title">
+                        <label class="login__label" for="password">Password</label>
+                        <span class="login__reset">Reset Password</span>
                     </div>
-                    <input id="password" class="password" type="password">
+                    <input id="password" class="login__input login__input--password" type="password">
                 </div>
             </div>
-            <button class="btn">Sign in</button>
+            <button class="login__btn login__btn--signin">Sign in</button>
         </form>
-        <p>Don’t have an account?<span>Sign up</span></p>
+        <p class="login__text">Don’t have an account?<span class="login__signup">Sign up</span></p>
     </div>
 </div>
 </body>
