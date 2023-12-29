@@ -7,161 +7,159 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <link href="styles/timetracking.css" rel="stylesheet">
 </head>
-<body>
-
-<div class="time-tracking-app">
-    <div class="content">
-        <header>
-            <div class="header-content ">
-                <img alt="logo" class="logo" src="images/logo.png">
-                <div>
-                    <div class="user-info">
-                        <h2 class="username">Mostafa A.</h2>
-                        <img alt="sync icon" src="images/icons/sync.svg">
-                        <img alt="setting icon" src="images/icons/settings.svg">
-                    </div>
+<body id="ce-extension">
+<main class="ce-timetracking">
+    <header class="ce-timetracking__header">
+        <div class="ce-timetracking__content">
+            <div>
+                <img alt="logo" src="images/logo.png">
+            </div>
+            <div class="ce-timetracking__user-info">
+                <h2 class="ce-header__username">Mostafa A.</h2>
+                <img alt="sync icon" src="images/icons/sync.svg">
+                <img alt="settings icon" src="images/icons/settings.svg">
+            </div>
+        </div>
+        <div class="ce-timetracking-timer">
+            <div class="ce-timetracking-time">
+                <div class="ce-timer__segment">
+                    <span class="ce-timer__digit" id="hour">00</span>H
+                </div>
+                <div class="ce-timer__segment">
+                    <span class="ce-timer__digit" id="minutes">00</span>M
+                </div>
+                <div class="ce-timer__segment">
+                    <span class="ce-timer__digit" id="seconds">00</span>S
                 </div>
             </div>
-        </header>
-        <div class="tasking-timer">
-            <div class="timer">
-                <div class="hours">
-                    <span class="digit" id="hour">00</span>H
-                </div>
-                <div class="hours">
-                    <span class="digit" id="minutes">00</span>M
-                </div>
-                <div class="hours">
-                    <span class="digit" id="seconds">00</span>S
-                </div>
-            </div>
-            <div class="tasks">
-                <div class="task">
-                    <h5>Writing ai topic, and publish it</h5>
-                    <div class="btns">
-                        <button id="start-btn">
-                            <img alt="Start icon"
-                                 src="images/icons/start-session.svg">
+            <div class="ce-timetracking__tasks">
+                <div class="ce-tasks__task">
+                    <h5 class="ce-task__title">Writing ai topic, and publish
+                        it</h5>
+                    <div class="ce-task__actions">
+                        <button class="ce-task__action">
+                            <img class="ce-action__icon" alt="Start icon"
+                                  src="images/icons/start-session.svg">
                         </button>
-                        <button id="stop-btn">
-                            <img alt="End icon"
+                        <button class="ce-task__action">
+                            <img class="ce-action__icon" alt="End icon"
                                  src="images/icons/end-session.svg">
                         </button>
                     </div>
                 </div>
-                <div class="task">
-                    <h5 style="opacity: .5;">Another taskto start next</h5>
-                    <div class="btns" style="visibility: hidden;">
-                        <button id="start-btn">
-                            <img alt="Start icon"
+                <div class="ce-tasks__task">
+                    <h5 class="ce-task__title" style="opacity: .5;">Another
+                        taskto start next</h5>
+                    <div class="ce-task__actions" style="visibility: hidden;">
+                        <button class="ce-task__action">
+                            <img class="ce-action__icon" alt="Start icon"
                                  src="images/icons/start-session.svg">
                         </button>
-                        <button id="stop-btn">
-                            <img alt="End icon"
+                        <button class="ce-task__action">
+                            <img class="ce-action__icon" alt="End icon"
                                  src="images/icons/end-session.svg">
                         </button>
                     </div>
                 </div>
-                <div class="task">
-                    <h5 style="opacity: .25;">up next task</h5>
-                    <div class="btns" style="visibility: hidden;">
-                        <button id="start-btn">
-                            <img alt="Start icon"
+                <div class="ce-tasks__task">
+                    <h5 class="ce-task__title" style="opacity: .25;">up next
+                        task</h5>
+                    <div class="ce-task__actions" style="visibility: hidden;">
+                        <button class="ce-task__action">
+                            <img class="ce-action__icon" alt="Start icon"
                                  src="images/icons/start-session.svg">
                         </button>
-                        <button id="stop-btn">
-                            <img alt="End icon"
+                        <button class="ce-task__action">
+                            <img class="ce-action__icon" alt="End icon"
                                  src="images/icons/end-session.svg">
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="sessions">
-        <div class="heading">
-            <h4>Sessions</h4>
-            <h5>Show more <img alt="" src="images/icons/show-more.svg"></h5>
+    </header>
+    <div class="ce-timetracking__sessions">
+        <div class="ce-timetracking__sessions--title">
+            <h4 class="ce-timetracking__sessions--heading">Sessions</h4>
+            <h5 class="ce-timetracking__sessions--subheading">Show more <img alt="" src="images/icons/show-more.svg"></h5>
         </div>
-        <div class="charts">
-            <div class="card">
-                <h6>
+        <div class="ce-sessions__charts">
+            <div class="ce-charts__card">
+                <h6 class="ce-charts__card--title">
                     Time
                     <img alt="" src="images/icons/watch.svg">
                 </h6>
-                <div class="time">
-                    01:05:42 <span>3 Sessions</span>
+                <div class="ce-charts__card--content">
+                    01:05:42 <span class="ce-charts__card--highlight">3
+                    Sessions</span>
                 </div>
             </div>
-            <div class="card">
-                <h6>
+            <div class="ce-charts__card">
+                <h6 class="ce-charts__card--title">
                     Sessions
                 </h6>
-                <div class="sessions">
-                    314<span>In last month</span>
+                <div class="ce-charts__card--content">
+                    314<span class="ce-charts__card--highlight">In last month</span>
                 </div>
             </div>
-            <div class="card">
-                <h6>
+            <div class="ce-charts__card">
+                <h6 class="ce-charts__card--title">
                     Last week
                 </h6>
-                <div class="last-week">
-                    32:51:07<span>86 Sessions</span>
+                <div class="ce-charts__card--content">
+                    32:51:07<span class="ce-charts__card--highlight">86 Sessions</span>
                 </div>
             </div>
         </div>
-        <div class="session">
-            <div class="title">
-                <div class="icon">
+        <div class="ce-sessions__session">
+            <div class="ce-sessions__session--title">
+                <div>
                     <img alt="Edit icon" src="images/edit.svg">
                 </div>
-                <div class="session-content">
-                    <h5>
-                        Writing new article<span>01:05:42</span>
+                    <h5 class="ce-sessions__session--task">
+                        Writing new article<span
+                            class="ce-sessions__session--highlight">01:05
+                        :42</span>
                     </h5>
-                </div>
             </div>
-            <div class="session-icons">
+            <div class="ce-sessions__session--actions">
                 <img alt="" src="images/icons/correct.svg">
                 <img alt="" src="images/icons/sync-exclamation.svg">
             </div>
         </div>
-        <div class="session">
-            <div class="title">
-                <div class="icon">
+        <div class="ce-sessions__session">
+            <div class="ce-sessions__session--title">
+                <div>
                     <img alt="Edit icon" src="images/edit.svg">
                 </div>
-                <div class="session-content">
-                    <h5>
-                        research keyword ideas<span>00:15:42</span>
-                    </h5>
-                </div>
+                <h5 class="ce-sessions__session--task">
+                    Writing new article<span
+                        class="ce-sessions__session--highlight">01:05
+                        :42</span>
+                </h5>
             </div>
-            <div class="session-icons">
+            <div class="ce-sessions__session--actions">
                 <img alt="" src="images/icons/correct.svg">
                 <img alt="" src="images/icons/sync-exclamation.svg">
             </div>
         </div>
-
-        <div class="session">
-            <div class="title">
-                <div class="icon">
+        <div class="ce-sessions__session">
+            <div class="ce-sessions__session--title">
+                <div>
                     <img alt="Edit icon" src="images/edit.svg">
                 </div>
-                <div class="session-content">
-                    <h5>
-                        Task Title, Desce<span>01:05:42</span>
-                    </h5>
-                </div>
+                <h5 class="ce-sessions__session--task">
+                    Writing new article<span
+                        class="ce-sessions__session--highlight">01:05
+                        :42</span>
+                </h5>
             </div>
-            <div class="session-icons">
+            <div class="ce-sessions__session--actions">
                 <img alt="" src="images/icons/correct.svg">
                 <img alt="" src="images/icons/sync-exclamation.svg">
             </div>
         </div>
-    </div>
-</div>
-
+</main>
 <script src="scripts/timetracking.js"></script>
 </body>
 </html>

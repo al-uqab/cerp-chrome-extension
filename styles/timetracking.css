@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;500;600;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@500;0,700;1,400;1,700&display=swap');
 
 * {
     box-sizing: border-box;
@@ -6,14 +6,17 @@
     padding: 0;
 }
 
-body {
+body#ce-extension {
     background-color: #f8f8f8;
+    box-sizing: border-box;
     display: flex;
     font-family: 'Fira Sans', sans-serif;
     justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
-.time-tracking-app {
+.ce-timetracking {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -22,20 +25,16 @@ body {
     max-width: 375px;
     position: relative;
     width: 374px;
-    /* background-color: red; */
 }
 
-.content {
+.ce-timetracking__header {
     background-color: #e42256;
+    position: relative;
     width: 100%;
 }
 
-header {
-    position: relative;
-}
-
-header::before {
-    background-image: url("../imgs/Vector.svg");
+.ce-timetracking__header::before {
+    background-image: url("../images/header-abstract-shape.svg");
     background-position: top right;
     background-repeat: no-repeat;
     content: "";
@@ -45,92 +44,87 @@ header::before {
     z-index: -1;
 }
 
-.header-content {
+.ce-timetracking__content {
     display: flex;
     justify-content: space-between;
     padding: 20px 5px 30px;
 }
 
-.header-content .user-info {
+.ce-timetracking__user-info {
     column-gap: 5px;
     display: flex;
     justify-content: space-between;
 }
 
-.header-content .user-info .username {
+.ce-header__username {
     color: #ffffff80;
     font-size: 12px;
     font-weight: 400;
 }
 
-.header-content .user-info img {
-    cursor: pointer;
-}
-
-.tasking-timer {
+.ce-timetracking-timer {
     padding-bottom: 30px;
 }
 
-.tasking-timer .timer {
+.ce-timetracking-time {
     column-gap: 5px;
     display: flex;
     justify-content: center;
     margin-bottom: 25px;
 }
 
-.tasking-timer .timer div {
+.ce-timer__segment {
     color: #ffffff80;
     font-size: 12px;
     font-weight: 700;
 }
 
-.tasking-timer .timer div span {
+.ce-timer__digit {
     color: #FFF;
     font-size: 40px;
     font-weight: 700;
 }
 
-/* tasks */
-.tasks {
+.ce-timetracking__tasks {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.tasks .task {
+.ce-tasks__task {
     column-gap: 20px;
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
 }
 
-.tasks .task h5 {
+.ce-task__title {
     color: #FFF;
     font-size: 12px;
     font-weight: 700;
 }
 
-.tasks .task .btns {
+.ce-task__actions {
     column-gap: 5px;
     display: flex;
 }
 
-.tasks .task .btns button {
+.ce-task__action {
     background: none;
     border: none;
     display: flex;
     outline: none;
 }
 
-.tasks .task .btns img {
+.ce-action__icon {
     cursor: pointer;
 }
 
-.sessions {
+.ce-timetracking__sessions {
     width: 100%;
 }
 
-.sessions .heading {
+.ce-timetracking__sessions--title {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
@@ -138,13 +132,13 @@ header::before {
     padding: 0 5px;
 }
 
-.sessions .heading h4 {
+.ce-timetracking__sessions--heading {
     color: #E42256;
     font-size: 12px;
     font-weight: 600;
 }
 
-.sessions .heading h5 {
+.ce-timetracking__sessions--subheading {
     color: #00000080;
     cursor: pointer;
     display: flex;
@@ -153,7 +147,7 @@ header::before {
     white-space: nowrap;
 }
 
-.charts {
+.ce-sessions__charts {
     align-items: flex-end;
     display: flex;
     justify-content: space-between;
@@ -162,14 +156,14 @@ header::before {
     padding-right: 5px;
 }
 
-.charts .card {
+.ce-charts__card {
     background: #fff;
     border: 1px solid #0000001a;
     border-radius: 10px;
     padding: 10px;
 }
 
-.charts .card h6 {
+.ce-charts__card--title {
     align-items: center;
     color: #e42256;
     display: flex;
@@ -180,24 +174,20 @@ header::before {
     margin-bottom: 10px;
 }
 
-.charts .card .time,
-.charts .card .sessions,
-.charts .card .last-week {
+.ce-charts__card--content {
     color: #14213d;
     font-size: 16px;
     font-weight: 700;
 }
 
-.charts .card .time span,
-.charts .card .sessions span,
-.charts .card .last-week span {
+.ce-charts__card--highlight {
     color: #14213d80;
     display: block;
     font-size: 12px;
     font-weight: 400;
 }
 
-.sessions .session {
+.ce-sessions__session {
     align-items: center;
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.10);
@@ -208,29 +198,26 @@ header::before {
     padding: 15px;
 }
 
-.sessions .session .title {
+.ce-sessions__session--title {
     align-items: center;
     column-gap: 10px;
     display: flex;
 }
 
-.sessions .title .session-content {
-}
-
-.sessions .title .session-content h5 {
+.ce-sessions__session--task {
     color: #14213D;
     font-size: 12px;
     font-weight: 500;
 }
 
-.sessions .session .title .session-content h5 span {
+.ce-sessions__session--highlight {
     color: #14213d80;
     display: block;
     font-size: 12px;
     font-weight: 400;
 }
 
-.session .session-icons {
+.ce-sessions__session--actions {
     align-items: center;
     column-gap: 5px;
     display: flex;
