@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@500;0,700;1,400;1,700&display=swap');
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body#ce-extension {
     background-color: #f8f8f8;
     box-sizing: border-box;
@@ -56,7 +50,7 @@ body#ce-extension {
     justify-content: space-between;
 }
 
-.ce-header__username {
+.ce-timetracking__username {
     color: #ffffff80;
     font-size: 12px;
     font-weight: 400;
@@ -102,6 +96,7 @@ body#ce-extension {
     color: #FFF;
     font-size: 12px;
     font-weight: 700;
+    margin: 0;
 }
 
 .ce-task__actions {
@@ -136,6 +131,7 @@ body#ce-extension {
     color: #E42256;
     font-size: 12px;
     font-weight: 600;
+    margin: 0;
 }
 
 .ce-timetracking__sessions--subheading {
@@ -144,6 +140,7 @@ body#ce-extension {
     display: flex;
     font-size: 10px;
     font-weight: 400;
+    margin: 0;
     white-space: nowrap;
 }
 
@@ -171,7 +168,7 @@ body#ce-extension {
     font-style: italic;
     font-weight: 700;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin: 0 0 10px;
 }
 
 .ce-charts__card--content {
@@ -208,6 +205,7 @@ body#ce-extension {
     color: #14213D;
     font-size: 12px;
     font-weight: 500;
+    margin: 0;
 }
 
 .ce-sessions__session--highlight {
