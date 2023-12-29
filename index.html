@@ -6,44 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles/login.css">
 </head>
-<body>
-<div class="login">
-    <header class="login__header">
-        <div class="login__content">
-            <div class="login__logo">
-                <img class="login__logo-img" alt="logo" src="images/logo.png">
+<body id="ce-extension">
+<div class="ce-login">
+    <header class="ce-login__header">
+        <div class="ce-login__content">
+            <div>
+                <img alt="logo" src="images/logo.png">
             </div>
-            <h3 class="login__title">The Enterprise Resource Planning software.</h3>
+            <h3 class="ce-login__title">The Enterprise Resource Planning software.</h3>
         </div>
     </header>
 
-    <div class="login__content">
-        <button class="login__btn login__btn--google">
-            <img class="login__btn-icon" alt="Google icon" src="images/google-icon.svg">
+    <div class="ce-login__content">
+        <button class="ce-login__btn--google">
+            <img class="ce-login__btn-icon" alt="Google icon" src="images/google-icon.svg">
             Continue with Google
         </button>
-        <div class="login__or">
-            <span class="login__line login__line--left"></span>
-            <span class="login__or-word">or</span>
-            <span class="login__line login__line--right"></span>
+        <div class="ce-login__or">
+            <span class="ce-login__line ce-login__line--left"></span>
+            <span class="ce-login__or-word">or</span>
+            <span class="ce-login__line ce-login__line--right"></span>
         </div>
-        <form class="login__form">
-            <div class="login__field login__field--username">
-                <label class="login__label" for="email">E-mail</label>
-                <input id="email" class="login__input login__input--email" type="email">
+        <form class="ce-login__form">
+            <div class="ce-login__field">
+                <label class="ce-login__label" for="email">E-mail</label>
+                <input id="email" class="ce-login__input" type="email">
             </div>
-            <div class="login__field login__field--password">
-                <div class="login__password">
-                    <div class="login__title">
-                        <label class="login__label" for="password">Password</label>
-                        <span class="login__reset">Reset Password</span>
+            <div class="ce-login__field">
+                <div>
+                    <div class="ce-login__title">
+                        <label class="ce-login__label" for="password">Password</label>
+                        <span class="ce-login__reset">Reset Password</span>
                     </div>
-                    <input id="password" class="login__input login__input--password" type="password">
+                    <input id="password" class="ce-login__input" type="password">
                 </div>
             </div>
-            <button class="login__btn login__btn--signin">Sign in</button>
+            <button class="ce-login__btn--signin">Sign in</button>
         </form>
-        <p class="login__text">Don’t have an account?<span class="login__signup">Sign up</span></p>
+        <p class="ce-login__text">Don’t have an account?<span class="ce-login__signup">Sign up</span></p>
     </div>
 </div>
 </body>

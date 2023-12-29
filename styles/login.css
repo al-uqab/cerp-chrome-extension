@@ -1,19 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@500;0,700;1,400;1,700&display=swap');
 
-* {
+body#ce-extension {
+    background-color: #f8f8f8;
     box-sizing: border-box;
+    display: flex;
+    font-family: 'Fira Sans', sans-serif;
+    justify-content: center;
     margin: 0;
     padding: 0;
 }
 
-body {
-    background-color: #f8f8f8;
-    display: flex;
-    font-family: 'Fira Sans', sans-serif;
-    justify-content: center;
-}
-
-.login {
+.ce-login {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -24,13 +21,13 @@ body {
     width: 374px;
 }
 
-.login__header {
+.ce-login__header {
     align-items: center;
     display: flex;
     flex-direction: column;
 }
 
-.login__header::after {
+.ce-login__header::after {
     background-image: url("../images/header-abstract-shape.svg");
     background-position: top right;
     background-repeat: no-repeat;
@@ -40,7 +37,7 @@ body {
     width: 100%;
 }
 
-.login__title {
+.ce-login__title {
     color: #14213d80;
     font-size: 12px;
     font-weight: 400;
@@ -49,7 +46,7 @@ body {
     width: 160px;
 }
 
-.login__content {
+.ce-login__content {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -61,12 +58,13 @@ body {
     z-index: 1;
 }
 
-.login__btn--google {
+.ce-login__btn--google {
     align-items: center;
     background-color: #fff;
     border: 1px solid #0000001a;
     border-radius: 5px;
     color: #555;
+    cursor: pointer;
     display: flex;
     font-family: 'Fira Sans', sans-serif;
     font-size: 12px;
@@ -76,38 +74,38 @@ body {
     width: 100%;
 }
 
-.login__btn--google .login__btn-icon {
+.ce-login__btn-icon {
     margin-right: 10px;
 }
 
-.login__or {
+.ce-login__or {
     align-items: center;
     display: flex;
     justify-content: center;
 }
 
-.login__line {
+.ce-login__line {
     background-color: #9993;
     height: 1px;
     width: 50px;
 }
 
-.login__line--left {
+.ce-login__line--left {
     margin-right: 3px;
 }
 
-.login__line--right {
+.ce-login__line--right {
     margin-left: 3px;
 }
 
-.login__or-word {
+.ce-login__or-word {
     color: #eb1e4b;
     display: inline-block;
     font-size: 12px;
     font-weight: 500;
 }
 
-.login__form {
+.ce-login__form {
     column-gap: 40px;
     display: flex;
     flex-direction: column;
@@ -117,26 +115,28 @@ body {
     width: 100%;
 }
 
-.login__field {
+.ce-login__field {
     display: flex;
     flex-direction: column;
 }
 
-.login__label {
+.ce-login__label {
     color: #14213d;
     font-size: 12px;
     font-weight: 400;
     margin-bottom: 5px;
 }
 
-.login__input {
+.ce-login__input {
     border: 1px solid rgba(0, 0, 0, 0.10);
     border-radius: 5px;
+    box-sizing: border-box;
+    outline-color: #e42256;
     padding: 10px;
     width: 100%;
 }
 
-.login__title {
+.ce-login__title {
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -144,14 +144,14 @@ body {
     width: 100%;
 }
 
-.login__reset {
+.ce-login__reset {
     color: #e42256;
     cursor: pointer;
     font-size: 9px;
     font-weight: 400;
 }
 
-.login__btn--signin {
+.ce-login__btn--signin {
     background: #e42256;
     border: none;
     border-radius: 10px;
@@ -163,13 +163,13 @@ body {
     padding: 10px;
 }
 
-.login__text {
+.ce-login__text {
     color: #14213d80;
     font-size: 12px;
     font-weight: 400;
 }
 
-.login__signup {
+.ce-login__signup {
     color: #e42256;
     cursor: pointer;
     display: block;
