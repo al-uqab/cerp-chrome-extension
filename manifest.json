@@ -11,7 +11,7 @@
     "128": "images/icons/icon-128.png"
   },
   "action": {
-    "default_popup": "index.html"
+    "default_popup": "timetracking.html"
   },
   "content_scripts": [
     {

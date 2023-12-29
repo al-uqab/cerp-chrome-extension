@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;500;600;0,700;1,400;1,700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f8f8f8;
+    display: flex;
+    font-family: 'Fira Sans', sans-serif;
+    justify-content: center;
+}
+
+.time-tracking-app {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 599px;
+    max-height: 600px;
+    max-width: 375px;
+    position: relative;
+    width: 374px;
+    /* background-color: red; */
+}
+
+.content {
+    background-color: #e42256;
+    width: 100%;
+}
+
+header {
+    position: relative;
+}
+
+header::before {
+    background-image: url("../imgs/Vector.svg");
+    background-position: top right;
+    background-repeat: no-repeat;
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5px 30px;
+}
+
+.header-content .user-info {
+    column-gap: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-content .user-info .username {
+    color: #ffffff80;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.header-content .user-info img {
+    cursor: pointer;
+}
+
+.tasking-timer {
+    padding-bottom: 30px;
+}
+
+.tasking-timer .timer {
+    column-gap: 5px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.tasking-timer .timer div {
+    color: #ffffff80;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tasking-timer .timer div span {
+    color: #FFF;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+/* tasks */
+.tasks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tasks .task {
+    column-gap: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.tasks .task h5 {
+    color: #FFF;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tasks .task .btns {
+    column-gap: 5px;
+    display: flex;
+}
+
+.tasks .task .btns button {
+    background: none;
+    border: none;
+    display: flex;
+    outline: none;
+}
+
+.tasks .task .btns img {
+    cursor: pointer;
+}
+
+.sessions {
+    width: 100%;
+}
+
+.sessions .heading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    padding: 0 5px;
+}
+
+.sessions .heading h4 {
+    color: #E42256;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.sessions .heading h5 {
+    color: #00000080;
+    cursor: pointer;
+    display: flex;
+    font-size: 10px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.charts {
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.charts .card {
+    background: #fff;
+    border: 1px solid #0000001a;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.charts .card h6 {
+    align-items: center;
+    color: #e42256;
+    display: flex;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 700;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.charts .card .time,
+.charts .card .sessions,
+.charts .card .last-week {
+    color: #14213d;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.charts .card .time span,
+.charts .card .sessions span,
+.charts .card .last-week span {
+    color: #14213d80;
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.sessions .session {
+    align-items: center;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    padding: 15px;
+}
+
+.sessions .session .title {
+    align-items: center;
+    column-gap: 10px;
+    display: flex;
+}
+
+.sessions .title .session-content {
+}
+
+.sessions .title .session-content h5 {
+    color: #14213D;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.sessions .session .title .session-content h5 span {
+    color: #14213d80;
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.session .session-icons {
+    align-items: center;
+    column-gap: 5px;
+    display: flex;
+}

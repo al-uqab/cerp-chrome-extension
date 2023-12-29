@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="styles/timetracking.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="time-tracking-app">
+    <div class="content">
+        <header>
+            <div class="header-content ">
+                <img alt="logo" class="logo" src="images/logo.png">
+                <div>
+                    <div class="user-info">
+                        <h2 class="username">Mostafa A.</h2>
+                        <img alt="sync icon" src="images/icons/sync.svg">
+                        <img alt="setting icon" src="images/icons/settings.svg">
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="tasking-timer">
+            <div class="timer">
+                <div class="hours">
+                    <span class="digit" id="hour">00</span>H
+                </div>
+                <div class="hours">
+                    <span class="digit" id="minutes">00</span>M
+                </div>
+                <div class="hours">
+                    <span class="digit" id="seconds">00</span>S
+                </div>
+            </div>
+            <div class="tasks">
+                <div class="task">
+                    <h5>Writing ai topic, and publish it</h5>
+                    <div class="btns">
+                        <button id="start-btn">
+                            <img alt="Start icon"
+                                 src="images/icons/start-session.svg">
+                        </button>
+                        <button id="stop-btn">
+                            <img alt="End icon"
+                                 src="images/icons/end-session.svg">
+                        </button>
+                    </div>
+                </div>
+                <div class="task">
+                    <h5 style="opacity: .5;">Another taskto start next</h5>
+                    <div class="btns" style="visibility: hidden;">
+                        <button id="start-btn">
+                            <img alt="Start icon"
+                                 src="images/icons/start-session.svg">
+                        </button>
+                        <button id="stop-btn">
+                            <img alt="End icon"
+                                 src="images/icons/end-session.svg">
+                        </button>
+                    </div>
+                </div>
+                <div class="task">
+                    <h5 style="opacity: .25;">up next task</h5>
+                    <div class="btns" style="visibility: hidden;">
+                        <button id="start-btn">
+                            <img alt="Start icon"
+                                 src="images/icons/start-session.svg">
+                        </button>
+                        <button id="stop-btn">
+                            <img alt="End icon"
+                                 src="images/icons/end-session.svg">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sessions">
+        <div class="heading">
+            <h4>Sessions</h4>
+            <h5>Show more <img alt="" src="images/icons/show-more.svg"></h5>
+        </div>
+        <div class="charts">
+            <div class="card">
+                <h6>
+                    Time
+                    <img alt="" src="images/icons/watch.svg">
+                </h6>
+                <div class="time">
+                    01:05:42 <span>3 Sessions</span>
+                </div>
+            </div>
+            <div class="card">
+                <h6>
+                    Sessions
+                </h6>
+                <div class="sessions">
+                    314<span>In last month</span>
+                </div>
+            </div>
+            <div class="card">
+                <h6>
+                    Last week
+                </h6>
+                <div class="last-week">
+                    32:51:07<span>86 Sessions</span>
+                </div>
+            </div>
+        </div>
+        <div class="session">
+            <div class="title">
+                <div class="icon">
+                    <img alt="Edit icon" src="images/edit.svg">
+                </div>
+                <div class="session-content">
+                    <h5>
+                        Writing new article<span>01:05:42</span>
+                    </h5>
+                </div>
+            </div>
+            <div class="session-icons">
+                <img alt="" src="images/icons/correct.svg">
+                <img alt="" src="images/icons/sync-exclamation.svg">
+            </div>
+        </div>
+        <div class="session">
+            <div class="title">
+                <div class="icon">
+                    <img alt="Edit icon" src="images/edit.svg">
+                </div>
+                <div class="session-content">
+                    <h5>
+                        research keyword ideas<span>00:15:42</span>
+                    </h5>
+                </div>
+            </div>
+            <div class="session-icons">
+                <img alt="" src="images/icons/correct.svg">
+                <img alt="" src="images/icons/sync-exclamation.svg">
+            </div>
+        </div>
+
+        <div class="session">
+            <div class="title">
+                <div class="icon">
+                    <img alt="Edit icon" src="images/edit.svg">
+                </div>
+                <div class="session-content">
+                    <h5>
+                        Task Title, Desce<span>01:05:42</span>
+                    </h5>
+                </div>
+            </div>
+            <div class="session-icons">
+                <img alt="" src="images/icons/correct.svg">
+                <img alt="" src="images/icons/sync-exclamation.svg">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="scripts/timetracking.js"></script>
+</body>
+</html>
