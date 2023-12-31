@@ -97,4 +97,16 @@ document.addEventListener('DOMContentLoaded', function() {
         startButton.style.display = 'inline-block';
         pauseButton.style.display = 'none';
     });
+
+    let username = localStorage.getItem('username');
+
+    if (!username) {
+        username = 'Guest User';
+    }
+
+    const usernameElement = document.querySelector('.ce-timetracking__username');
+
+    if (usernameElement) {
+        usernameElement.textContent = username;
+    }
 });

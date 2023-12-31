@@ -22,10 +22,18 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
         if (response.ok && responseData.data && responseData.data.user && responseData.data.accessToken) {
             // Success: User object with accessToken exists in the response
+            const user = responseData.data.user;
             const accessToken = responseData.data.accessToken;
 
-            // Store accessToken in local storage
+            // Get firstName and lastName from user object
+            const { firstName, lastName } = user;
+
+            // Create username with capitalized first letters and a space between them
+            const username = `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName.charAt(0))}.`;
+
+            // Store accessToken and username in local storage
             localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('username', username);
 
             window.location.href = 'timetracking.html';
         } else {
@@ -40,6 +48,11 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         document.body.removeChild(preloaderContainer);
     }
 });
+
+// Function to capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
 
 // Check if accessToken exists in local storage
 document.addEventListener('DOMContentLoaded', function() {
