@@ -12,7 +12,7 @@
     <header class="ce-timetracking__header">
         <div class="ce-timetracking__content">
             <div>
-                <img alt="logo" src="images/logo.png">
+                <img alt="logo" src="images/icons/cerp-icon-white.png">
             </div>
             <nav class="ce-timetracking__user-info">
                 <h2 class="ce-timetracking__username">Mostafa A.</h2>
@@ -46,7 +46,7 @@
                     <h5 class="ce-task__title">Writing ai topic, and publish
                         it</h5>
                     <div class="ce-task__actions">
-                        <button class="ce-task__action">
+                        <button class="ce-task__action" id="startTaskButton">
                             <img alt="Start icon" class="ce-action__icon"
                                  src="images/icons/start-session.svg">
                         </button>
@@ -88,16 +88,16 @@
         </div>
     </header>
     <div class="ce-timetracking__sessions">
-        <section class="ce-timetracking__sessions--title">
+        <header class="ce-timetracking__sessions--title">
             <h4 class="ce-timetracking__sessions--heading">Sessions</h4>
             <h5 class="ce-timetracking__sessions--subheading">Show more <img
                     alt="" src="images/icons/show-more.svg"></h5>
-        </section>
+        </header>
         <section class="ce-sessions__charts">
             <div class="ce-charts__card">
                 <h6 class="ce-charts__card--title">
                     Time
-                    <img alt="" src="images/icons/watch.svg">
+<!--                     <img alt="" src="images/icons/watch.svg"> -->
                 </h6>
                 <div class="ce-charts__card--content">
                     01:05:42 <span class="ce-charts__card--highlight">3
@@ -123,54 +123,57 @@
                 </div>
             </div>
         </section>
-        <article class="ce-sessions__session">
-            <div class="ce-sessions__session--title">
-                <div>
-                    <img alt="Edit icon" src="images/edit.svg">
-                </div>
-                <h5 class="ce-sessions__session--task">
-                    Writing new article<span
-                        class="ce-sessions__session--highlight">01:05
+        <section>
+            <article class="ce-sessions__session">
+                <div class="ce-sessions__session--title">
+                    <div>
+                        <img alt="Edit icon" src="images/edit.svg">
+                    </div>
+                    <h5 class="ce-sessions__session--task">
+                        Writing new article<span
+                            class="ce-sessions__session--highlight">01:05
                         :42</span>
-                </h5>
-            </div>
-            <div class="ce-sessions__session--actions">
-                <img alt="" src="images/icons/correct.svg">
-                <img alt="" src="images/icons/sync-exclamation.svg">
-            </div>
-        </article>
-        <article class="ce-sessions__session">
-            <div class="ce-sessions__session--title">
-                <div>
-                    <img alt="Edit icon" src="images/edit.svg">
+                    </h5>
                 </div>
-                <h5 class="ce-sessions__session--task">
-                    Writing new article<span
-                        class="ce-sessions__session--highlight">01:05
-                        :42</span>
-                </h5>
-            </div>
-            <div class="ce-sessions__session--actions">
-                <img alt="" src="images/icons/correct.svg">
-                <img alt="" src="images/icons/sync-exclamation.svg">
-            </div>
-        </article>
-        <article class="ce-sessions__session">
-            <div class="ce-sessions__session--title">
-                <div>
-                    <img alt="Edit icon" src="images/edit.svg">
+                <div class="ce-sessions__session--actions">
+                    <img alt="" src="images/icons/correct.svg">
+                    <img alt="" src="images/icons/sync-exclamation.svg">
                 </div>
-                <h5 class="ce-sessions__session--task">
-                    Writing new article<span
-                        class="ce-sessions__session--highlight">01:05
+            </article>
+            <article class="ce-sessions__session">
+                <div class="ce-sessions__session--title">
+                    <div>
+                        <img alt="Edit icon" src="images/edit.svg">
+                    </div>
+                    <h5 class="ce-sessions__session--task">
+                        Writing new article<span
+                            class="ce-sessions__session--highlight">01:05
                         :42</span>
-                </h5>
-            </div>
-            <div class="ce-sessions__session--actions">
-                <img alt="" src="images/icons/correct.svg">
-                <img alt="" src="images/icons/sync-exclamation.svg">
-            </div>
-        </article>
+                    </h5>
+                </div>
+                <div class="ce-sessions__session--actions">
+                    <img alt="" src="images/icons/correct.svg">
+                    <img alt="" src="images/icons/sync-exclamation.svg">
+                </div>
+            </article>
+            <article class="ce-sessions__session">
+                <div class="ce-sessions__session--title">
+                    <div>
+                        <img alt="Edit icon" src="images/edit.svg">
+                    </div>
+                    <h5 class="ce-sessions__session--task">
+                        Writing new article<span
+                            class="ce-sessions__session--highlight">01:05
+                        :42</span>
+                    </h5>
+                </div>
+                <div class="ce-sessions__session--actions">
+                    <img alt="" src="images/icons/correct.svg">
+                    <img alt="" src="images/icons/sync-exclamation.svg">
+                </div>
+            </article>
+        </section>
+
 </main>
 <script src="scripts/timetracking.js"></script>
 </body>

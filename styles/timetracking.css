@@ -9,6 +9,9 @@ body#ce-extension {
     margin: 0;
     padding: 0;
 }
+body#ce-extension * {
+    box-sizing: border-box;
+}
 
 .ce-timetracking {
     align-items: center;
@@ -41,7 +44,7 @@ body#ce-extension {
 .ce-timetracking__content {
     display: flex;
     justify-content: space-between;
-    padding: 20px 5px 30px;
+    padding: 20px;
 }
 
 .ce-timetracking__user-info {
@@ -57,7 +60,7 @@ body#ce-extension {
 }
 
 .ce-timetracking-timer {
-    padding-bottom: 30px;
+    padding: 0 20px 20px;
 }
 
 .ce-timetracking-time {
@@ -88,7 +91,7 @@ body#ce-extension {
 .ce-tasks__task {
     column-gap: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 5px;
 }
 
@@ -102,6 +105,7 @@ body#ce-extension {
 .ce-task__actions {
     column-gap: 5px;
     display: flex;
+    align-items: center;
 }
 
 .ce-task__action {
@@ -109,6 +113,8 @@ body#ce-extension {
     border: none;
     display: flex;
     outline: none;
+    margin: 0;
+    padding: 0;
 }
 
 .ce-action__icon {
@@ -117,13 +123,17 @@ body#ce-extension {
 
 .ce-timetracking__sessions {
     width: 100%;
+    padding-right: 20px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
 }
 
 .ce-timetracking__sessions--title {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
-    margin-top: 20px;
+    margin: 20px 0 0;
     padding: 0 5px;
 }
 
@@ -145,10 +155,9 @@ body#ce-extension {
 }
 
 .ce-sessions__charts {
-    align-items: flex-end;
+    align-items: flex-start;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -158,6 +167,7 @@ body#ce-extension {
     border: 1px solid #0000001a;
     border-radius: 10px;
     padding: 10px;
+    width: 32%;
 }
 
 .ce-charts__card--title {
@@ -192,7 +202,7 @@ body#ce-extension {
     display: flex;
     justify-content: space-between;
     margin-top: 5px;
-    padding: 15px;
+    padding: 10px 15px;
 }
 
 .ce-sessions__session--title {

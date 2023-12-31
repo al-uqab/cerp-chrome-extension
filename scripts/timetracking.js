@@ -1,78 +1,57 @@
-let startBtn = document.getElementById('start-btn');
-let stopBtn = document.getElementById('stop-btn'); console.log(stopBtn);
-// let resetBtn = document.getElementById('reset');
+document.addEventListener('DOMContentLoaded', function() {
+    const startButtons = document.querySelectorAll('.ce-tasks__task .ce-task__action#startTaskButton');
 
-// let hour = 00;
-// let minute = 00;
-// let second = 00;
-// let count = 00;
+    startButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const taskTitle = this.closest('.ce-tasks__task').querySelector('.ce-task__title').innerText;
+            console.log(`Starting timer for task: ${taskTitle}`);
 
-// startBtn.addEventListener('click', function () {
-//     timer = true;
-//     stopWatch();
-// });
+            // Send a message to the background script to start the timer
+            chrome.runtime.sendMessage({ action: 'startTimer' });
 
-// stopBtn.addEventListener('click', function () {
-//     timer = false;
-// });
+            // Store the task title and start time in storage
+            chrome.storage.local.set({ 'activeTask': taskTitle, 'startTime': Date.now() });
+        });
+    });
 
-// resetBtn.addEventListener('click', function () {
-//     timer = false;
-//     hour = 0;
-//     minute = 0;
-//     second = 0;
-//     count = 0;
-//     document.getElementById('hr').innerHTML = "00";
-//     document.getElementById('min').innerHTML = "00";
-//     document.getElementById('sec').innerHTML = "00";
-//     document.getElementById('count').innerHTML = "00";
-// });
+    // Retrieve the active task and start time from storage when the popup is opened
+    chrome.storage.local.get(['activeTask', 'startTime'], function(result) {
+        const activeTask = result.activeTask;
+        const startTime = result.startTime;
 
-// function stopWatch() {
-//     if (timer) {
-//         count++;
+        if (activeTask && startTime) {
+            const hourDisplay = document.getElementById('hour');
+            const minuteDisplay = document.getElementById('minutes');
+            const secondDisplay = document.getElementById('seconds');
 
-//         if (count == 100) {
-//             second++;
-//             count = 0;
-//         }
+            if (hourDisplay && minuteDisplay && secondDisplay) {
+                let seconds = Math.floor((Date.now() - startTime) / 1000);
 
-//         if (second == 60) {
-//             minute++;
-//             second = 0;
-//         }
+                const timer = setInterval(() => {
+                    seconds++;
+                    const hours = Math.floor(seconds / 3600);
+                    const minutes = Math.floor((seconds % 3600) / 60);
+                    const secs = seconds % 60;
 
-//         if (minute == 60) {
-//             hour++;
-//             minute = 0;
-//             second = 0;
-//         }
+                    hourDisplay.innerText = String(hours).padStart(2, '0');
+                    minuteDisplay.innerText = String(minutes).padStart(2, '0');
+                    secondDisplay.innerText = String(secs).padStart(2, '0');
+                }, 1000);
 
-//         let hrString = hour;
-//         let minString = minute;
-//         let secString = second;
-//         let countString = count;
+                // Simulated duration for demonstration purposes (remove this in actual implementation)
+                setTimeout(() => {
+                    console.log(`Stopped timer for task: ${activeTask}`);
+                    clearInterval(timer);
 
-//         if (hour < 10) {
-//             hrString = "0" + hrString;
-//         }
+                    // Send a message to the background script to stop the timer
+                    chrome.runtime.sendMessage({ action: 'stopTimer' });
 
-//         if (minute < 10) {
-//             minString = "0" + minString;
-//         }
-
-//         if (second < 10) {
-//             secString = "0" + secString;
-//         }
-
-//         if (count < 10) {
-//             countString = "0" + countString;
-//         }
-
-//         document.getElementById('hr').innerHTML = hrString;
-//         document.getElementById('min').innerHTML = minString;
-//         document.getElementById('sec').innerHTML = secString;
-//         document.getElementById('count').innerHTML = countString;
-//         setTimeout(stopWatch, 10);
-//     }
-// }
+                    // Clear storage for the completed task
+                    chrome.storage.local.remove(['activeTask', 'startTime']);
+                }, 60000); // Simulated 60-second duration for the task
+            } else {
+                console.error('Timer display elements not found');
+            }
+        }
+    });
+});

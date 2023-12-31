@@ -10,8 +10,18 @@
     "48": "images/icons/icon-48.png",
     "128": "images/icons/icon-128.png"
   },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "index.html",
+        "timetracking.html",
+        "settings.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "action": {
-    "default_popup": "settings.html"
+    "default_popup": "timetracking.html"
   },
   "content_scripts": [
     {
@@ -22,5 +32,11 @@
         "styles/login.css"
       ]
     }
+  ],
+  "permissions": [
+    "storage",
+    "http://*/",
+    "https://*/",
+    "file:///*"
   ]
 }

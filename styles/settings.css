@@ -1,19 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;500;600;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@500;0,700;1,400;1,700&display=swap');
 
-* {
+body#ce-extension {
+    background-color: #f8f8f8;
+    box-sizing: border-box;
+    display: flex;
+    font-family: 'Fira Sans', sans-serif;
+    justify-content: center;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    font-family: 'Fira Sans', sans-serif;
-    background-color: #f8f8f8;
-}
-
-.settings {
+.ce-settings {
     position: relative;
     width: 100%;
     padding-left: 20px;
@@ -27,7 +24,7 @@ body {
     /* background-color: red; */
 }
 
-.settings::before {
+.ce-settings::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -38,19 +35,19 @@ body {
     z-index: -1;
 }
 
-header {
+.ce-settings__header {
     margin-bottom: 25px;
     display: flex;
     justify-content: space-between;
     padding-top: 20px;
 }
 
-header .user-info {
+.ce-settings__user-info {
     display: flex;
     column-gap: 5px;
 }
 
-header .user-info .username {
+.ce-settings__username {
     font-size: 12px;
     font-weight: 400;
     color: rgba(228, 34, 86, 0.50);
@@ -62,8 +59,6 @@ header .user-info .username {
     align-items: flex-start;
     column-gap: 15px;
 }
-
-.portfolio .details {}
 
 .portfolio .details h2 {
     font-size: 12px;
