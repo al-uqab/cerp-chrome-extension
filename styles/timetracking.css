@@ -47,16 +47,34 @@ body#ce-extension * {
     padding: 20px;
 }
 
+.ce-timetracking__page-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.ce-timetracking__heading-title {
+    color: #fff;
+    font-weight: 700;
+}
+
 .ce-timetracking__user-info {
     column-gap: 5px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .ce-timetracking__username {
     color: #ffffff80;
     font-size: 12px;
     font-weight: 400;
+    margin: 0;
+}
+
+.ce-timetracking__link {
+    display: inline-flex;
 }
 
 .ce-timetracking-timer {

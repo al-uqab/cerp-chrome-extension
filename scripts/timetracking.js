@@ -11,9 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let startTime;
     let pausedTime = 0; // Variable to store time when paused
 
-    // Function to start the timer
     function startTimer(taskTitle) {
-        let initialTime = pausedTime; // Use paused time as the initial time
+        const initialTime = pausedTime; // Use paused time as the initial time
 
         timerInterval = setInterval(() => {
             const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
@@ -29,14 +28,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
-    // Function to pause the timer
     function pauseTimer() {
         clearInterval(timerInterval);
         pausedTime += Math.floor((Date.now() - startTime) / 1000);
         isTimerRunning = false;
+        chrome.storage.local.set({ 'pausedTime': pausedTime }); // Save paused time to storage
     }
 
-    // Function to reset the timer
     function resetTimer() {
         clearInterval(timerInterval);
         isTimerRunning = false;
@@ -44,61 +42,59 @@ document.addEventListener('DOMContentLoaded', function() {
         hourDisplay.innerText = '00';
         minuteDisplay.innerText = '00';
         secondDisplay.innerText = '00';
-        chrome.storage.local.remove(['activeTask', 'startTime']);
+        chrome.storage.local.remove(['activeTask', 'startTime', 'pausedTime']);
     }
 
-    // Retrieve the active task and start time from storage when the popup is opened
-    chrome.storage.local.get(['activeTask', 'startTime'], function(result) {
+    chrome.storage.local.get(['activeTask', 'startTime', 'pausedTime'], function(result) {
         const activeTask = result.activeTask;
         startTime = result.startTime;
 
         if (activeTask && startTime) {
             const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-            pausedTime = result.pausedTime || 0; // Retrieve paused time if available
+            pausedTime = result.pausedTime || 0;
 
-            if (elapsedTime - pausedTime > 0) {
+            if (isTimerRunning || (elapsedTime - pausedTime > 0 && pausedTime !== 0)) {
                 startTimer(activeTask);
                 isTimerRunning = true;
-                startButton.style.display = 'none'; // Hide start button when timer is running
-                pauseButton.style.display = 'inline-block'; // Show pause button when timer is running
+                startButton.style.display = 'none';
+                pauseButton.style.display = 'inline-block';
+            } else if (pausedTime !== 0) {
+                hourDisplay.innerText = String(Math.floor(pausedTime / 3600)).padStart(2, '0');
+                minuteDisplay.innerText = String(Math.floor((pausedTime % 3600) / 60)).padStart(2, '0');
+                secondDisplay.innerText = String(pausedTime % 60).padStart(2, '0');
             }
         }
     });
 
-    // Event listener for the start/pause button
     startButton.addEventListener('click', function() {
         const taskTitle = this.closest('.ce-tasks__task').querySelector('.ce-task__title').innerText;
-        console.log(`Button clicked for task: ${taskTitle}`);
 
         if (isTimerRunning) {
             pauseTimer();
-            startButton.style.display = 'inline-block'; // Show start button when paused
-            pauseButton.style.display = 'none'; // Hide pause button when paused
+            startButton.style.display = 'inline-block';
+            pauseButton.style.display = 'none';
         } else {
-            startTime = Date.now();
+            startTime = Date.now() - pausedTime * 1000; // Adjust startTime based on pausedTime
             chrome.storage.local.set({ 'activeTask': taskTitle, 'startTime': startTime });
 
             startTimer(taskTitle);
             isTimerRunning = true;
-            startButton.style.display = 'none'; // Hide start button when timer is running
-            pauseButton.style.display = 'inline-block'; // Show pause button when timer is running
+            startButton.style.display = 'none';
+            pauseButton.style.display = 'inline-block';
         }
     });
 
-    // Event listener for the pause button
     pauseButton.addEventListener('click', function() {
         if (isTimerRunning) {
             pauseTimer();
-            startButton.style.display = 'inline-block'; // Show start button when paused
-            pauseButton.style.display = 'none'; // Hide pause button when paused
+            startButton.style.display = 'inline-block';
+            pauseButton.style.display = 'none';
         }
     });
 
-    // Event listener for the end button
     endButton.addEventListener('click', function() {
-        console.log('End button clicked');
         resetTimer();
-        startButton.style.display = 'inline-block'; // Show start button when timer is reset
-        pauseButton.style.display = 'none'; // Hide pause button when timer is reset
+        startButton.style.display = 'inline-block';
+        pauseButton.style.display = 'none';
     });
 });

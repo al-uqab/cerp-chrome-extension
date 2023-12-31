@@ -1,4 +1,4 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
+document.getElementById('loginForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const preloaderContainer = document.createElement('div');
@@ -6,37 +6,47 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     document.body.appendChild(preloaderContainer);
 
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                preloaderContainer.innerHTML = xhr.responseText;
-                document.getElementById('preloader').style.display = 'block';
+    try {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-                // Simulate a POST request to /v2/login
-                // Replace this with your actual AJAX request logic using fetch, XMLHttpRequest, or any preferred method
-                // Simulating a delay to mimic a network request
-                setTimeout(() => {
-                    const email = document.getElementById('email').value;
-                    const password = document.getElementById('password').value;
+        const response = await fetch('https://dev.contenterp.com/api/v2/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, password: password })
+        });
 
-                    if (email === 'mohamed@mail.com' && password === 'test') {
-                        window.location.href = 'timetracking.html';
-                    } else {
-                        alert('Invalid email or password. Please try again.');
-                    }
+        const responseData = await response.json();
 
-                    // Hide the preloader after processing the login request
-                    document.getElementById('preloader').style.display = 'none';
-                    document.body.removeChild(preloaderContainer);
-                }, 2000); // Simulated 2-second delay for demonstration purposes (remove this line in actual implementation)
-            } else {
-                console.error('Error fetching preloader content:', xhr.status);
-            }
+        if (response.ok && responseData.data && responseData.data.user && responseData.data.accessToken) {
+            // Success: User object with accessToken exists in the response
+            const accessToken = responseData.data.accessToken;
+
+            // Store accessToken in local storage
+            localStorage.setItem('accessToken', accessToken);
+
+            window.location.href = 'timetracking.html';
+        } else {
+            // Invalid email or password
+            alert('Invalid email or password. Please try again.');
         }
-    };
+    } catch (error) {
+        console.error('Error fetching preloader content:', error);
+    } finally {
+        // Hide the preloader after processing the login request
+        document.getElementById('preloader').style.display = 'none';
+        document.body.removeChild(preloaderContainer);
+    }
+});
 
-    // Fetch the preloader content
-    xhr.open('GET', 'preloader.html');
-    xhr.send();
+// Check if accessToken exists in local storage
+document.addEventListener('DOMContentLoaded', function() {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (accessToken) {
+        // AccessToken exists, redirect to 'timetracking.html' or perform other actions as needed
+        window.location.href = 'timetracking.html';
+    }
 });
