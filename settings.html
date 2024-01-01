@@ -10,7 +10,7 @@
 <body id="ce-extension">
 <main class="ce-settings">
     <header class="ce-settings__header">
-        <div>
+        <div class="ce-settings__logo">
             <img alt="logo" src="images/title-icon.svg">
         </div>
         <nav class="ce-settings__user-info">
@@ -19,31 +19,37 @@
             <img alt="settings icon" src="images/icons/settings.svg">
         </nav>
     </header>
-    <section>
-        <div class="portfolio">
-            <img src="images/user-profile-picture.png" alt="">
-            <div class="details">
-                <h2>Mostafa Ahmed Abdelkader</h2>
-                <span>Content Creator</span>
-                <span>718 Session, 1045 Hours</span>
-                <span>Member Since: 24 Dec 2023</span>
+    <section class="ce-settings__section">
+        <div class="ce-settings__user-details">
+            <img alt="" src="images/user-profile-picture.png">
+            <div class="ce-user-details">
+                <h2 class="ce-user-details__name">Mostafa Ahmed Abdelkader</h2>
+                <span class="ce-user-details__role">Content Creator</span>
+                <span class="ce-user-details__info">718 Session, 1045 Hours</span>
+                <span class="ce-user-details__member-since">Member Since: 24 Dec 2023</span>
             </div>
-            <img src="images/icons/external-link.svg" alt="" style="cursor: pointer;">
+            <img alt="" class="ce-user-details__link-icon"
+                 src="images/icons/external-link.svg">
         </div>
     </section>
-    <div>
-        <div class="sync">
-            <div>
-                <img src="images/icons/settings-sync.svg" alt="">
-                <h2>Sync Now</h2>
+    <section class="ce-settings__section">
+        <div class="ce-settings__item">
+            <div class="ce-settings__item--content">
+                <img alt="" class="ce-settings__item--icon"
+                     src="images/icons/settings-sync.svg">
+                <h2 class="ce-settings__item--heading">Sync Now</h2>
             </div>
-            <p>Last Synced: 3 Minutes Ago</p>
+            <p class="ce-settings__sync--info">Last Synced: 3 Minutes Ago</p>
         </div>
-        <div class="log-out">
-            <img src="images/icons/logout.svg" alt="">
-            <h2>Log Out</h2>
+        <div class="ce-settings__item" id="logout">
+            <div class="ce-settings__item--content">
+                <img alt="" class="ce-settings__item--icon"
+                     src="images/icons/logout.svg">
+                <h2 class="ce-settings__item--heading">Log Out</h2>
+            </div>
         </div>
-    </div>
+    </section>
 </main>
+<script src="scripts/settings.js"></script>
 </body>
 </html>
