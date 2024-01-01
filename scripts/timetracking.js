@@ -1,6 +1,6 @@
 "use strict"
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const hourDisplay = document.getElementById('hour');
     const minuteDisplay = document.getElementById('minutes');
     const secondDisplay = document.getElementById('seconds');
@@ -114,4 +114,68 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         updateButtonDisplay();
     });
+
+    const fetchTasks = async () => {
+        try {
+            const token = localStorage.getItem('accessToken');
+            const response = await fetch('https://dev.contenterp.com/api/v2/tasks/by-user/655bfd2589636bd03d75636c/top', {
+                method: 'GET', headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch tasks');
+            }
+
+            const tasksData = await response.json();
+            return tasksData;
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+            return [];
+        }
+    };
+
+    const replaceTasks = async () => {
+        const tasks = await fetchTasks();
+        if (tasks.code !== 200) return;
+
+        const data = tasks.data[0];
+        const taskTitle = data.mainKeyword;
+        const taskSubTasks = data.tasks;
+
+        let firstIncompleteTask = null;
+        const remainingTasks = [];
+
+        for (const task of taskSubTasks) {
+            if (!firstIncompleteTask && !task.completed) {
+                firstIncompleteTask = task;
+            } else {
+                remainingTasks.push(task);
+            }
+        }
+
+        const currentTaskContent = document.querySelector('.ce-task__title--main');
+        const currentTaskTitle = document.querySelector('.ce-task__title--task');
+        currentTaskContent.innerText = `${taskTitle}:`;
+        currentTaskTitle.innerText = firstIncompleteTask.requirement;
+
+        const tasksContainer = document.querySelector('.ce-timetracking__tasks');
+
+        remainingTasks.forEach(task => {
+            const article = document.createElement('article');
+            article.classList.add('ce-tasks__task');
+
+            const h5 = document.createElement('h5');
+            h5.classList.add('ce-task__title');
+            h5.style.opacity = '0.5';
+            h5.textContent = task.requirement;
+
+            article.appendChild(h5);
+            tasksContainer.appendChild(article);
+        });
+    };
+
+    // Replace existing tasks with fetched tasks
+    await replaceTasks();
 });

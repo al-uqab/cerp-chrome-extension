@@ -104,8 +104,12 @@ body#ce-extension * {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-width: 230px;
     margin: 0 auto;
+}
+
+.ce-task__title--main {
+    opacity: 0.75;
+    font-weight: 400;
 }
 
 .ce-tasks__task {
