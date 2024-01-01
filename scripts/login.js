@@ -26,13 +26,14 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             const accessToken = responseData.data.accessToken;
 
             // Get firstName and lastName from user object
-            const { firstName, lastName } = user;
+            const { id, firstName, lastName } = user;
 
             // Create username with capitalized first letters and a space between them
             const username = `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName.charAt(0))}.`;
 
             // Store accessToken and username in local storage
             localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('userId', id);
             localStorage.setItem('username', username);
 
             window.location.href = 'timetracking.html';
