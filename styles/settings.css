@@ -42,15 +42,34 @@ body#ce-extension {
     padding-top: 20px;
 }
 
-.ce-settings__user-info {
-    column-gap: 5px;
+.ce-timetracking__page-heading {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
 }
 
-.ce-settings__username {
-    color: rgba(228, 34, 86, 0.50);
+.ce-timetracking__heading-title {
+    color: #e42256;
+    font-weight: 700;
+}
+
+.ce-timetracking__user-info {
+    column-gap: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ce-timetracking__username {
+    color: #e4225680;
     font-size: 12px;
     font-weight: 400;
+    margin: 0;
+}
+
+.ce-timetracking__link {
+    display: inline-flex;
 }
 
 .ce-settings__user-details {

@@ -33,4 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error:', error); // Handle fetch or other errors
         }
     });
+
+    const getUsername = () => localStorage.getItem('username') || 'Guest User';
+
+    const setInitialUsername = () => {
+        const username = getUsername();
+        const usernameElement = document.querySelector('.ce-timetracking__username');
+        if (usernameElement) {
+            usernameElement.textContent = username;
+        }
+    };
+
+    setInitialUsername();
 });

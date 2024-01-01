@@ -177,6 +177,92 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     };
 
+
     // Replace existing tasks with fetched tasks
     await replaceTasks();
+
+    const fetchSessions = async () => {
+        try {
+            const token = localStorage.getItem('accessToken');
+            const userId = localStorage.getItem('userId');
+            const response = await fetch(`https://dev.contenterp.com/api/v2/time-trackings/user/655bfd2589636bd03d75636c/sessions`, {
+                method: 'GET', headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch tasks');
+            }
+
+            const sessionsData = await response.json();
+            return sessionsData;
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+            return [];
+        }
+    };
+
+    function formatLoggedTime(loggedMinutes) {
+        const hours = Math.floor(loggedMinutes / 60);
+        const minutes = loggedMinutes % 60;
+        const seconds = 0; // Assuming seconds are always 0 in this context
+
+        const formattedHours = String(hours).padStart(2, '0');
+        const formattedMinutes = String(minutes).padStart(2, '0');
+        const formattedSeconds = String(seconds).padStart(2, '0');
+
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    const createSessionElement = (task) => {
+        const article = document.createElement('article');
+        article.classList.add('ce-sessions__session');
+
+        const sessionTitle = document.createElement('div');
+        sessionTitle.classList.add('ce-sessions__session--title');
+
+        const editIcon = document.createElement('div');
+        editIcon.innerHTML = '<img alt="Edit icon" src="images/edit.svg">';
+        sessionTitle.appendChild(editIcon);
+
+        const sessionTask = document.createElement('h5');
+        sessionTask.classList.add('ce-sessions__session--task');
+        sessionTask.innerHTML = `${task.task.requirement}<span class="ce-sessions__session--highlight">${formatLoggedTime(task.loggedMinutes)}</span>`;
+        sessionTitle.appendChild(sessionTask);
+
+        article.appendChild(sessionTitle);
+
+        const sessionActions = document.createElement('div');
+        sessionActions.classList.add('ce-sessions__session--actions');
+
+        const correctIcon = document.createElement('img');
+        correctIcon.alt = '';
+        correctIcon.src = 'images/icons/correct.svg';
+        sessionActions.appendChild(correctIcon);
+
+        const syncIcon = document.createElement('img');
+        syncIcon.alt = '';
+        syncIcon.src = 'images/icons/sync-exclamation.svg';
+
+        article.appendChild(sessionActions);
+
+        return article;
+    };
+
+    const replaceSessions = async () => {
+        const sessions = await fetchSessions();
+        if (sessions.code !== 200) return;
+        if (!Array.isArray(sessions.data)) return;
+
+        const pastSessionsContainer = document.querySelector('.ce-sessions__past--sessions');
+
+        pastSessionsContainer.innerHTML = '';
+        sessions.data.forEach((session) => {
+            const sessionElement = createSessionElement(session);
+            pastSessionsContainer.appendChild(sessionElement);
+        });
+    };
+
+    await replaceSessions();
 });
