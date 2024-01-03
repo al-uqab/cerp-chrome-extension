@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const token = localStorage.getItem('accessToken');
             const userId = localStorage.getItem('userId');
-            const response = await fetch(`https://dev.contenterp.com/api/v2/time-trackings/user/655bfd2589636bd03d75636c/sessions`, {
+            const response = await fetch(`https://dev.contenterp.com/api/v2/time-trackings/user/${userId}/sessions`, {
                 method: 'GET', headers: {
                     'Authorization': `Bearer ${token}`
                 }

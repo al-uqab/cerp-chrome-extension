@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (responseData.code === 200) {
                     // Logout successful
                     localStorage.removeItem('accessToken');
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('username');
                     window.location.href = 'index.html';
                 } else {
                     console.error('Logout failed:', responseData.message); // Handle unsuccessful logout
