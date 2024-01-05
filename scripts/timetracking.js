@@ -1,13 +1,14 @@
-"use strict";
+'use strict';
 
-import createStopwatch from "./timerHelper.js";
+import createStopwatch from './helpers/stopwatch.js';
+import ui              from './helpers/interface.js';
 
 const stopwatch = createStopwatch();
-const getElement = (id) => document.getElementById(id);
-const hideElement = (element) => {
+const getElement = ( id ) => document.getElementById(id);
+const hideElement = ( element ) => {
     element.style.display = 'none';
 };
-const showElement = (element, displayType = 'inline-block') => {
+const showElement = ( element, displayType = 'inline-block' ) => {
     element.style.display = displayType;
 };
 
@@ -47,4 +48,13 @@ const initializeSessionControls = () => {
     endSessionButton.addEventListener('click', handleEndButtonClick);
 };
 
-document.addEventListener('DOMContentLoaded', initializeSessionControls);
+const buildUI = async () => {
+    await ui.setUser();
+    await ui.buildTasks();
+    await ui.buildSessions();
+};
+
+document.addEventListener('DOMContentLoaded', async () => {
+    initializeSessionControls();
+    await buildUI();
+});

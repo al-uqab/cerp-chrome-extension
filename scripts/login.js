@@ -1,66 +1,45 @@
-document.getElementById('loginForm').addEventListener('submit', async function(event) {
-    event.preventDefault();
+'use strict';
 
-    const preloaderContainer = document.createElement('div');
-    preloaderContainer.id = 'preloaderContainer';
+import storage from './helpers/storage.js';
+import api     from './helpers/api.js';
 
-    document.body.appendChild(preloaderContainer);
+const isLoggedIn = storage.getValues().token || false;
 
-    try {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+if (isLoggedIn) {
+    window.location.href = 'timetracking.html';
+}
 
-        const response = await fetch('https://dev.contenterp.com/api/v2/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: email, password: password })
-        });
+const loginForm = document.getElementById('loginForm');
 
-        const responseData = await response.json();
+const attemptLogin = async () => {
+    const userEmail = document.getElementById('email').value;
+    const userPassword = document.getElementById('password').value;
+    return await api.login(userEmail, userPassword);
+};
 
-        if (response.ok && responseData.data && responseData.data.user && responseData.data.accessToken) {
-            // Success: User object with accessToken exists in the response
-            const user = responseData.data.user;
-            const accessToken = responseData.data.accessToken;
-
-            // Get firstName and lastName from user object
-            const { id, firstName, lastName } = user;
-
-            // Create username with capitalized first letters and a space between them
-            const username = `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName.charAt(0))}.`;
-
-            // Store accessToken and username in local storage
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('userId', id);
-            localStorage.setItem('username', username);
-
-            window.location.href = 'timetracking.html';
-        } else {
-            // Invalid email or password
-            alert('Invalid email or password. Please try again.');
-        }
-    } catch (error) {
-        console.error('Error fetching preloader content:', error);
-    } finally {
-        // Hide the preloader after processing the login request
-        document.getElementById('preloader').style.display = 'none';
-        document.body.removeChild(preloaderContainer);
-    }
-});
-
-// Function to capitalize the first letter of a string
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter( string ) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
-// Check if accessToken exists in local storage
-document.addEventListener('DOMContentLoaded', function() {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (accessToken) {
-        // AccessToken exists, redirect to 'timetracking.html' or perform other actions as needed
-        window.location.href = 'timetracking.html';
+const handleSuccessfulLogin = ( response ) => {
+    if (!response.success) {
+        alert('Invalid email or password. Please try again.');
+        return;
     }
-});
+
+    const userData = response.credentials.data.user;
+    const accessToken = response.credentials.data.accessToken;
+
+    const {id, firstName, lastName} = userData;
+    const formattedUserName = `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName.charAt(0))}.`;
+
+    storage.setValues({token: accessToken, userId: id, userName: formattedUserName});
+    return window.location.href = 'timetracking.html';
+};
+
+const handleLoginFormSubmission = ( event ) => {
+    event.preventDefault();
+    attemptLogin().then(handleSuccessfulLogin);
+};
+
+loginForm.addEventListener('submit', handleLoginFormSubmission);
