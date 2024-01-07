@@ -92,7 +92,10 @@ const ui = {
             const pastSessionsContainer = document.querySelector('.ce-sessions__past--sessions');
             pastSessionsContainer.innerHTML = '';
 
-            sessions.data.forEach(session => {
+            const totalSessions = sessions.data.length;
+            const lastThreeSessions = sessions.data.slice(Math.max(totalSessions - 3, 0));
+
+            lastThreeSessions.forEach(session => {
                 const sessionElement = createSessionElement(session);
                 pastSessionsContainer.appendChild(sessionElement);
             });
