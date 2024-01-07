@@ -20,6 +20,12 @@ const storage = {
             localStorage.setItem('userName', userName);
         }
     },
+
+    clear: () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+    },
 };
 
 export default storage;

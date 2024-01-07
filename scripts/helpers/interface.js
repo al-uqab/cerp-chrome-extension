@@ -41,14 +41,6 @@ const ui = {
         return false;
     },
 
-    setTime: () => {
-        const trackedTime = sessionStorage.getItem('trackedTime');
-        if (!trackedTime) return;
-
-        const {seconds, minutes, hours} = JSON.parse(trackedTime);
-        stopwatch.displayTime(seconds, minutes, hours);
-    },
-
     buildTasks: async () => {
         try {
             const tasks = await api.fetchTasks();
@@ -71,6 +63,8 @@ const ui = {
 
             remainingTasks.forEach(task => {
                 const article = createTaskElement('article', 'ce-tasks__task');
+                article.setAttribute('data-id', task.id);
+
                 const h5 = createTaskElement('h5', 'ce-task__title');
                 h5.style.opacity = '0.5';
                 h5.textContent = task.requirement;

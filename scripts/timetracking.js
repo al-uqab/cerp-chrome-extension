@@ -3,9 +3,10 @@
 import createStopwatch from './helpers/stopwatch.js';
 import ui              from './helpers/interface.js';
 
-ui.injectPreloader();
+ui.injectPreloader()
 
 const stopwatch = createStopwatch();
+
 const getElement = ( id ) => document.getElementById(id);
 const hideElement = ( element ) => {
     element.style.display = 'none';
@@ -51,7 +52,6 @@ const initializeSessionControls = () => {
 
 const buildUI = async () => {
     ui.setUser();
-    ui.setTime();
     await ui.buildTasks();
     await ui.buildSessions();
     return true;

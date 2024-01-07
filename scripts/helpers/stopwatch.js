@@ -5,8 +5,14 @@ const createStopwatch = () => {
     let stopwatchInterval = null;
     let elapsedPausedTime = 0;
     let timeTrackedDisplay = null;
+    let currentTaskId = null;
+
+    const setCurrentTaskId = (id) => {
+        currentTaskId = id;
+    };
 
     const startStopwatch = async ( displayElement ) => {
+        console.log(currentTaskId);
         let startedAt;
         let isRunning;
         timeTrackedDisplay = displayElement;
@@ -110,7 +116,7 @@ const createStopwatch = () => {
         return (number < 10 ? '0' : '') + number;
     };
 
-    return {startStopwatch, pauseStopwatch, resetStopwatch};
+    return {startStopwatch, pauseStopwatch, resetStopwatch, setCurrentTaskId};
 };
 
 export default createStopwatch;

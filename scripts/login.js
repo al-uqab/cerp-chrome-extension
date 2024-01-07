@@ -14,7 +14,6 @@ if (isLoggedIn) {
 const loginForm = document.getElementById('loginForm');
 
 const attemptLogin = async () => {
-    ui.injectPreloader();
     const userEmail = document.getElementById('email').value;
     const userPassword = document.getElementById('password').value;
     return await api.login(userEmail, userPassword);
@@ -27,7 +26,6 @@ function capitalizeFirstLetter( string ) {
 const handleSuccessfulLogin = ( response ) => {
     if (!response.success) {
         alert('Invalid email or password. Please try again.');
-        return ui.removePreloader();
     }
 
     const userData = response.credentials.data.user;

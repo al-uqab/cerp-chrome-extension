@@ -1,50 +1,13 @@
-"use strict";
+'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const logoutButton = document.getElementById('logout');
+import ui  from './helpers/interface.js';
+import api from './helpers/api.js';
 
-    logoutButton.addEventListener('click', async () => {
-        try {
-            const token = localStorage.getItem('accessToken');
+ui.setUser();
 
-            const response = await fetch('https://dev.contenterp.com/api/v2/auth/logout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ token })
-            });
+const handleLogout = async () => {
+    await api.logout();
+};
 
-            if (response.ok) {
-                const responseData = await response.json();
-
-                if (responseData.code === 200) {
-                    // Logout successful
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('userId');
-                    localStorage.removeItem('username');
-                    window.location.href = 'index.html';
-                } else {
-                    console.error('Logout failed:', responseData.message); // Handle unsuccessful logout
-                }
-            } else {
-                console.error('Error:', response.status); // Handle other HTTP errors
-            }
-        } catch (error) {
-            console.error('Error:', error); // Handle fetch or other errors
-        }
-    });
-
-    const getUsername = () => localStorage.getItem('username') || 'Guest User';
-
-    const setInitialUsername = () => {
-        const username = getUsername();
-        const usernameElement = document.querySelector('.ce-timetracking__username');
-        if (usernameElement) {
-            usernameElement.textContent = username;
-        }
-    };
-
-    setInitialUsername();
-});
+const logoutButton = document.getElementById('logout');
+logoutButton.addEventListener('click', handleLogout);
