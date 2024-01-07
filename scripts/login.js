@@ -2,6 +2,8 @@
 
 import storage from './helpers/storage.js';
 import api     from './helpers/api.js';
+import ui      from './helpers/interface.js';
+
 
 const isLoggedIn = storage.getValues().token || false;
 
@@ -12,6 +14,7 @@ if (isLoggedIn) {
 const loginForm = document.getElementById('loginForm');
 
 const attemptLogin = async () => {
+    ui.injectPreloader();
     const userEmail = document.getElementById('email').value;
     const userPassword = document.getElementById('password').value;
     return await api.login(userEmail, userPassword);
@@ -24,7 +27,7 @@ function capitalizeFirstLetter( string ) {
 const handleSuccessfulLogin = ( response ) => {
     if (!response.success) {
         alert('Invalid email or password. Please try again.');
-        return;
+        return ui.removePreloader();
     }
 
     const userData = response.credentials.data.user;

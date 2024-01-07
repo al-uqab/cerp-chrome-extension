@@ -3,6 +3,8 @@
 import createStopwatch from './helpers/stopwatch.js';
 import ui              from './helpers/interface.js';
 
+ui.injectPreloader();
+
 const stopwatch = createStopwatch();
 const getElement = ( id ) => document.getElementById(id);
 const hideElement = ( element ) => {
@@ -12,30 +14,29 @@ const showElement = ( element, displayType = 'inline-block' ) => {
     element.style.display = displayType;
 };
 
+const startSessionButton = getElement('startTaskButton');
+const pauseSessionButton = getElement('pauseTaskButton');
+const endSessionButton = getElement('endTaskButton');
+
+const pausedStyles = () => {
+    hideElement(pauseSessionButton);
+    showElement(startSessionButton);
+};
+
+const startedStyles = () => {
+    hideElement(startSessionButton);
+    showElement(pauseSessionButton);
+};
+
 const initializeSessionControls = () => {
-    const startSessionButton = getElement('startTaskButton');
-    const pauseSessionButton = getElement('pauseTaskButton');
-    const endSessionButton = getElement('endTaskButton');
     const timeTrackedDisplay = document.querySelector('.ce-timetracking-time');
 
-    const pausedStyles = () => {
-        hideElement(pauseSessionButton);
-        showElement(startSessionButton);
-    };
-
-    const startedStyles = () => {
-        hideElement(startSessionButton);
-        showElement(pauseSessionButton);
-    };
-
     const handleStartButtonClick = () => {
-        stopwatch.startStopwatch(timeTrackedDisplay);
-        startedStyles();
+        stopwatch.startStopwatch(timeTrackedDisplay).then(r => startedStyles());
     };
 
     const handlePauseButtonClick = () => {
-        stopwatch.pauseStopwatch();
-        pausedStyles();
+        stopwatch.pauseStopwatch().then(r => pausedStyles());
     };
 
     const handleEndButtonClick = () => {
@@ -49,12 +50,21 @@ const initializeSessionControls = () => {
 };
 
 const buildUI = async () => {
-    await ui.setUser();
+    ui.setUser();
+    ui.setTime();
     await ui.buildTasks();
     await ui.buildSessions();
+    return true;
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const timeTrackedDisplay = document.querySelector('.ce-timetracking-time');
+    await stopwatch.startStopwatch(timeTrackedDisplay).then(( isRunning ) => {
+        if (isRunning) return startedStyles();
+        return pausedStyles();
+    });
     initializeSessionControls();
-    await buildUI();
+    await buildUI().then((built) => {
+        if(built) return ui.removePreloader();
+    });
 });

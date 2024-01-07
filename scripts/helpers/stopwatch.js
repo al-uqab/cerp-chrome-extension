@@ -6,22 +6,71 @@ const createStopwatch = () => {
     let elapsedPausedTime = 0;
     let timeTrackedDisplay = null;
 
-    const startStopwatch = ( displayElement ) => {
+    const startStopwatch = async ( displayElement ) => {
+        let startedAt;
+        let isRunning;
         timeTrackedDisplay = displayElement;
-        if (!stopwatchInterval) {
-            startTime = new Date().getTime() - elapsedPausedTime;
-            stopwatchInterval = setInterval(updateStopwatch, 1000);
+
+        try {
+            const storageData = await new Promise(( resolve, reject ) => {
+                chrome.storage.local.get(['startedAt', 'pausedAt'], ( result ) => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+
+            if (storageData.startedAt) {
+                startedAt = storageData.startedAt;
+            } else {
+                startedAt = new Date().getTime();
+
+                // Update the 'startedAt' value in storage
+                await new Promise(( resolve, reject ) => {
+                    chrome.storage.local.set({startedAt: startedAt}, () => {
+                        if (chrome.runtime.lastError) {
+                            reject(chrome.runtime.lastError);
+                        } else {
+                            resolve();
+                        }
+                    });
+                });
+            }
+
+            if (storageData.pausedAt) {
+                startTime = startedAt - storageData.pausedAt;
+            } else {
+                startTime = startedAt - elapsedPausedTime;
+            }
+
+            if (!stopwatchInterval) {
+                stopwatchInterval = setInterval(updateStopwatch, 1000);
+            }
+        } catch (error) {
+            console.error('Error occurred:', error);
         }
+
+        return isRunning;
     };
 
-    const pauseStopwatch = () => {
+    const pauseStopwatch = ( isReset = false ) => {
         clearInterval(stopwatchInterval);
         elapsedPausedTime = new Date().getTime() - startTime;
         stopwatchInterval = null;
+
+        if (isReset) {
+            // Remove both 'startedAt' and 'pausedAt' from storage
+            return chrome.storage.local.remove(['startedAt', 'pausedAt']);
+        } else {
+            // Update 'pausedAt' value in storage
+            return chrome.storage.local.set({ pausedAt: elapsedPausedTime });
+        }
     };
 
     const resetStopwatch = () => {
-        pauseStopwatch();
+        pauseStopwatch(true);
         elapsedPausedTime = 0;
         displayTime(0, 0, 0);
     };

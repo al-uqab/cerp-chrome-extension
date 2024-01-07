@@ -44,7 +44,7 @@ body#ce-extension * {
 .ce-timetracking__content {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 15px 20px;
 }
 
 .ce-timetracking__page-heading {
@@ -78,14 +78,16 @@ body#ce-extension * {
 }
 
 .ce-timetracking-timer {
-    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    padding: 0 20px 15px;
 }
 
 .ce-timetracking-time {
     column-gap: 5px;
     display: flex;
     justify-content: center;
-    margin-bottom: 25px;
 }
 
 .ce-timer__segment {
@@ -104,7 +106,6 @@ body#ce-extension * {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 auto;
 }
 
 .ce-task__title--main {
@@ -130,15 +131,22 @@ body#ce-extension * {
     column-gap: 5px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .ce-task__action {
-    background: none;
+    align-items: center;
+    justify-content: center;
+    background: #0d223f;
     border: none;
+    cursor: pointer;
     display: flex;
     outline: none;
     margin: 0;
     padding: 0;
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
 }
 
 #pauseTaskButton {
@@ -155,13 +163,13 @@ body#ce-extension * {
     padding-left: 20px;
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 15px;
 }
 
 .ce-timetracking__sessions--title {
     display: flex;
     justify-content: space-between;
-    margin: 20px 0 0;
+    margin: 15px 0 0;
     padding: 0 5px;
 }
 

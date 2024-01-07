@@ -1,17 +1,52 @@
 'use strict';
 
-import storage from './storage.js';
-import api     from './api.js';
+import storage         from './storage.js';
+import api             from './api.js';
+import createStopwatch from './stopwatch.js';
 
 const storageData = storage.getValues();
+const stopwatch = createStopwatch();
+
 const ui = {
+    injectPreloader: () => {
+        fetch(chrome.runtime.getURL('preloader.html'))
+            .then(response => response.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                const preloader = doc.documentElement;
+
+                // Inject the preloader into the current page
+                document.documentElement.appendChild(preloader);
+            })
+            .catch(error => {
+                console.error('Error fetching preloader HTML:', error);
+            });
+    },
+
+    removePreloader: () => {
+        const preloaderElement = document.getElementById('ce-preloader-html');
+
+        if (preloaderElement) {
+            preloaderElement.remove();
+        }
+    },
+
     setUser: () => {
         const usernameElement = document.getElementById('userName');
         if (usernameElement) {
-            return usernameElement.textContent = storageData.userName;
+            usernameElement.textContent = storageData.userName;
+            return true;
         }
-
         return false;
+    },
+
+    setTime: () => {
+        const trackedTime = sessionStorage.getItem('trackedTime');
+        if (!trackedTime) return;
+
+        const {seconds, minutes, hours} = JSON.parse(trackedTime);
+        stopwatch.displayTime(seconds, minutes, hours);
     },
 
     buildTasks: async () => {
@@ -50,17 +85,23 @@ const ui = {
     },
 
     buildSessions: async () => {
-        const sessions = await api.fetchSessions();
-        if (sessions.code !== 200) return;
-        if (!Array.isArray(sessions.data)) return;
+        try {
+            const sessions = await api.fetchSessions();
+            if (!sessions || sessions.code !== 200 || !Array.isArray(sessions.data)) {
+                return;
+            }
 
-        const pastSessionsContainer = document.querySelector('.ce-sessions__past--sessions');
+            const pastSessionsContainer = document.querySelector('.ce-sessions__past--sessions');
+            pastSessionsContainer.innerHTML = '';
 
-        pastSessionsContainer.innerHTML = '';
-        sessions.data.forEach(( session ) => {
-            const sessionElement = createSessionElement(session);
-            pastSessionsContainer.appendChild(sessionElement);
-        });
+            sessions.data.forEach(session => {
+                const sessionElement = createSessionElement(session);
+                pastSessionsContainer.appendChild(sessionElement);
+            });
+        } catch (error) {
+            console.error('Error building sessions:', error);
+            console.error(error.stack); // log error stack trace for debugging purposes
+        }
     },
 };
 
@@ -70,7 +111,7 @@ const createTaskElement = ( tagName, className ) => {
     return element;
 };
 
-const formatLoggedTime = (loggedMinutes) => {
+const formatLoggedTime = ( loggedMinutes ) => {
     const hours = Math.floor(loggedMinutes / 60);
     const minutes = loggedMinutes % 60;
     const seconds = 0; // Assuming seconds are always 0 in this context
@@ -80,37 +121,36 @@ const formatLoggedTime = (loggedMinutes) => {
     const formattedSeconds = String(seconds).padStart(2, '0');
 
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-}
+};
 
 const createSessionElement = ( task ) => {
-    const article = document.createElement('article');
-    article.classList.add('ce-sessions__session');
-
-    const sessionTitle = document.createElement('div');
-    sessionTitle.classList.add('ce-sessions__session--title');
+    const article = createTaskElement('article', 'ce-sessions__session');
+    const sessionTitle = createTaskElement('div', 'ce-sessions__session--title');
 
     const editIcon = document.createElement('div');
     editIcon.innerHTML = '<img alt="Edit icon" src="images/edit.svg">';
     sessionTitle.appendChild(editIcon);
 
-    const sessionTask = document.createElement('h5');
-    sessionTask.classList.add('ce-sessions__session--task');
-    sessionTask.innerHTML = `${task.task.requirement}<span class="ce-sessions__session--highlight">${formatLoggedTime(task.loggedMinutes)}</span>`;
+    const sessionTask = createTaskElement('h5', 'ce-sessions__session--task');
+    const taskRequirement = document.createTextNode(task.task.requirement);
+    const taskLoggedTime = createTaskElement('span', 'ce-sessions__session--highlight');
+    taskLoggedTime.textContent = formatLoggedTime(task.loggedMinutes);
+
+    sessionTask.appendChild(taskRequirement);
+    sessionTask.appendChild(taskLoggedTime);
     sessionTitle.appendChild(sessionTask);
 
     article.appendChild(sessionTitle);
 
-    const sessionActions = document.createElement('div');
-    sessionActions.classList.add('ce-sessions__session--actions');
+    const sessionActions = createTaskElement('div', 'ce-sessions__session--actions');
 
     const correctIcon = document.createElement('img');
-    correctIcon.alt = '';
     correctIcon.src = 'images/icons/correct.svg';
     sessionActions.appendChild(correctIcon);
 
     const syncIcon = document.createElement('img');
-    syncIcon.alt = '';
     syncIcon.src = 'images/icons/sync-exclamation.svg';
+    sessionActions.appendChild(syncIcon);
 
     article.appendChild(sessionActions);
 

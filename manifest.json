@@ -15,9 +15,12 @@
       "resources": [
         "index.html",
         "timetracking.html",
-        "settings.html"
+        "settings.html",
+        "preloader.html"
       ],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "action": {
@@ -34,9 +37,10 @@
     }
   ],
   "permissions": [
-    "storage",
-    "http://*/",
-    "https://*/",
-    "file:///*"
-  ]
+    "storage"
+  ],
+  "background": {
+    "service_worker": "scripts/helpers/stopwatch.js",
+    "type": "module"
+  }
 }

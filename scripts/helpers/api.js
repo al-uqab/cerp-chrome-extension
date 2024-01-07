@@ -42,7 +42,6 @@ const api = {
 
     fetchTasks: async () => {
         try {
-            const authHeader = getAuthHeader();
             const endpoint = `${BASE_URL}/tasks/by-user/${storageData.userId}/top`;
             const response = await fetch(endpoint, {
                 method: 'GET', headers: getAuthHeader(),
@@ -57,7 +56,6 @@ const api = {
 
     fetchSessions: async () => {
         try {
-            const authHeader = getAuthHeader();
             const endpoint = `${BASE_URL}/time-trackings/user/${storageData.userId}/sessions`;
             const response = await fetch(endpoint, {
                 method: 'GET', headers: getAuthHeader(),
