@@ -2,10 +2,8 @@
 
 import storage         from './storage.js';
 import api             from './api.js';
-import createStopwatch from './stopwatch.js';
 
 const storageData = storage.getValues();
-const stopwatch = createStopwatch();
 
 const ui = {
     injectPreloader: () => {
@@ -42,6 +40,7 @@ const ui = {
     },
 
     buildTasks: async () => {
+        let currentTaskId;
         try {
             const tasks = await api.fetchTasks();
             if (!tasks || tasks.code !== 200) {
@@ -61,6 +60,9 @@ const ui = {
             const tasksContainer = document.querySelector('.ce-timetracking__tasks');
             tasksContainer.innerHTML = '';
 
+            currentTaskId = firstIncompleteTask.id;
+
+            remainingTasks.unshift(firstIncompleteTask);
             remainingTasks.forEach(task => {
                 const article = createTaskElement('article', 'ce-tasks__task');
                 article.setAttribute('data-id', task.id);
@@ -76,6 +78,8 @@ const ui = {
             console.error('Error building tasks:', error);
             console.error(error.stack); // log error stack trace for debugging purposes
         }
+
+        return currentTaskId;
     },
 
     buildSessions: async () => {

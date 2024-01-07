@@ -1,15 +1,17 @@
 'use strict';
 
 import storage from './storage.js';
-import ui from './interface.js';
+import ui      from './interface.js';
 
 const BASE_URL = 'https://dev.contenterp.com/api/v2';
 const storageData = storage.getValues();
 
 const getAuthHeader = () => {
-    return {
-        'Authorization': `Bearer ${storageData.token}`,
+    const headers = {
+        'Content-Type': 'application/json', 'Authorization': `Bearer ${storageData.token}`,
     };
+
+    return headers;
 };
 
 const handleFetchErrors = ( response ) => {
@@ -49,9 +51,7 @@ const api = {
         try {
             const token = storageData.token;
             const response = await fetch(`${BASE_URL}/auth/logout`, {
-                method: 'POST', headers: {
-                    'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`,
-                }, body: JSON.stringify({token}),
+                method: 'POST', headers: getAuthHeader(), body: JSON.stringify({token}),
             });
 
             if (response.ok) {
@@ -97,6 +97,39 @@ const api = {
         } catch (error) {
             console.error('Error fetching sessions:', error);
             return [];
+        }
+    },
+
+    startTask: async ( taskId ) => {
+        try {
+            const response = await fetch(`${BASE_URL}/tasks/${taskId}/start`, {
+                method: 'POST', headers: getAuthHeader(), body: JSON.stringify({taskId}),
+            });
+
+
+            if (response.ok) {
+                const responseData = await response.json();
+            } else {
+                console.error('Error starting task:', response.status); // Handle error cases
+            }
+        } catch (error) {
+            console.error('Error:', error); // Handle fetch or other errors
+        }
+    },
+
+    sendTaskTime: async ( taskId, elapsedMinutes ) => {
+        try {
+            const response = await fetch(`${BASE_URL}/tasks/${taskId}/time-trackings`, {
+                method: 'POST', headers: getAuthHeader(), body: JSON.stringify({loggedMinutes: elapsedMinutes}),
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+            } else {
+                console.error('Error sending task time:', response.status); // Handle error cases
+            }
+        } catch (error) {
+            console.error('Error:', error); // Handle fetch or other errors
         }
     },
 };

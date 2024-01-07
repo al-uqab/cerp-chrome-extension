@@ -3,7 +3,7 @@
 import createStopwatch from './helpers/stopwatch.js';
 import ui              from './helpers/interface.js';
 
-ui.injectPreloader()
+ui.injectPreloader();
 
 const stopwatch = createStopwatch();
 
@@ -52,9 +52,9 @@ const initializeSessionControls = () => {
 
 const buildUI = async () => {
     ui.setUser();
-    await ui.buildTasks();
+    const currentTaskId = await ui.buildTasks();
     await ui.buildSessions();
-    return true;
+    return {built: true, currentTaskId};
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -64,7 +64,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         return pausedStyles();
     });
     initializeSessionControls();
-    await buildUI().then((built) => {
-        if(built) return ui.removePreloader();
+    await buildUI().then(( {built, currentTaskId} ) => {
+        stopwatch.setCurrentTaskId(currentTaskId);
+        if (built) return ui.removePreloader();
     });
 });

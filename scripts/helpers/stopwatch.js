@@ -1,5 +1,7 @@
 'use strict';
 
+import api from './api.js';
+
 const createStopwatch = () => {
     let startTime = null;
     let stopwatchInterval = null;
@@ -7,12 +9,13 @@ const createStopwatch = () => {
     let timeTrackedDisplay = null;
     let currentTaskId = null;
 
-    const setCurrentTaskId = (id) => {
+    const setCurrentTaskId = ( id ) => {
         currentTaskId = id;
     };
 
     const startStopwatch = async ( displayElement ) => {
-        console.log(currentTaskId);
+        await api.startTask(currentTaskId);
+
         let startedAt;
         let isRunning;
         timeTrackedDisplay = displayElement;
@@ -71,12 +74,16 @@ const createStopwatch = () => {
             return chrome.storage.local.remove(['startedAt', 'pausedAt']);
         } else {
             // Update 'pausedAt' value in storage
-            return chrome.storage.local.set({ pausedAt: elapsedPausedTime });
+            return chrome.storage.local.set({pausedAt: elapsedPausedTime});
         }
     };
 
     const resetStopwatch = () => {
         pauseStopwatch(true);
+
+        const elapsedMinutes = Math.floor(elapsedPausedTime / (1000 * 60)); // Convert milliseconds to minutes
+        api.sendTaskTime(currentTaskId, elapsedMinutes);
+
         elapsedPausedTime = 0;
         displayTime(0, 0, 0);
     };
