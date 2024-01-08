@@ -63,7 +63,8 @@ const ui = {
             currentTaskId = firstIncompleteTask.id;
 
             remainingTasks.unshift(firstIncompleteTask);
-            remainingTasks.forEach(task => {
+            const tasksToDisplay = remainingTasks.slice(0, 3);
+            tasksToDisplay.forEach(task => {
                 const article = createTaskElement('article', 'ce-tasks__task');
                 article.setAttribute('data-id', task.id);
 
@@ -151,7 +152,13 @@ const createSessionElement = ( task ) => {
 
     const syncIcon = document.createElement('img');
     syncIcon.src = 'images/icons/sync-exclamation.svg';
-    sessionActions.appendChild(syncIcon);
+    /*
+     * TODO: Implement logic to display this icon
+     *       when the session is completed locally but
+     *       hasn't been synced with the server yet.
+     */
+    // sessionActions.appendChild(syncIcon);
+
 
     article.appendChild(sessionActions);
 
