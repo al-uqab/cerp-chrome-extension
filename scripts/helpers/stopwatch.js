@@ -37,7 +37,7 @@ const createStopwatch = () => {
         });
     };
 
-    const initStopwatch = async () => {
+    const initStopwatch = async ( isRunning = false ) => {
         let startedAt = new Date().getTime();
 
         const storageData = await new Promise(( resolve, reject ) => {
@@ -50,18 +50,21 @@ const createStopwatch = () => {
             });
         });
 
-        if (storageData.pausedAt) {
-            elapsedPausedTime = storageData.pausedAt;
-        }
-
         if (storageData.startedAt) {
             startedAt = storageData.startedAt;
         } else {
             await chrome.storage.session.set({startedAt: startedAt});
         }
 
-        if (!stopwatchInterval) {
+        if (storageData.pausedAt && !isRunning) {
+            startTime = new Date().getTime() + storageData.pausedAt;
+        } else if (isRunning) {
             startTime = startedAt - elapsedPausedTime;
+        } else {
+            startTime = new Date().getTime() - elapsedPausedTime;
+        }
+
+        if (!stopwatchInterval) {
             stopwatchInterval = setInterval(updateStopwatch, 1000);
         }
     };
@@ -74,7 +77,7 @@ const createStopwatch = () => {
             const isRunning = await getStopwatchRunningState();
 
             if (isRunning) {
-                await initStopwatch();
+                await initStopwatch(true);
             } else if (!isRunning && manualStart) {
                 await initStopwatch();
                 await setStopwatchRunningState(true);
@@ -87,7 +90,7 @@ const createStopwatch = () => {
 
     };
 
-    const pauseStopwatch = async (isReset = false) => {
+    const pauseStopwatch = async ( isReset = false ) => {
         clearInterval(stopwatchInterval);
         elapsedPausedTime = new Date().getTime() - startTime;
         stopwatchInterval = null;
