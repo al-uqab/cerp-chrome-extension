@@ -13,70 +13,106 @@ const createStopwatch = () => {
         currentTaskId = id;
     };
 
-    const startStopwatch = async ( displayElement ) => {
-        await api.startTask(currentTaskId);
-
-        let startedAt;
-        let isRunning;
-        timeTrackedDisplay = displayElement;
-
-        try {
-            const storageData = await new Promise(( resolve, reject ) => {
-                chrome.storage.local.get(['startedAt', 'pausedAt'], ( result ) => {
-                    if (chrome.runtime.lastError) {
-                        reject(chrome.runtime.lastError);
-                    } else {
-                        resolve(result);
-                    }
-                });
+    const getStopwatchRunningState = () => {
+        return new Promise(( resolve, reject ) => {
+            chrome.storage.local.get(['isStopwatchRunning'], ( result ) => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                } else {
+                    resolve(result.isStopwatchRunning || false);
+                }
             });
+        });
+    };
 
-            if (storageData.startedAt) {
-                startedAt = storageData.startedAt;
-            } else {
-                startedAt = new Date().getTime();
+    const setStopwatchRunningState = ( isRunning ) => {
+        return new Promise(( resolve, reject ) => {
+            chrome.storage.local.set({isStopwatchRunning: isRunning}, () => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    };
 
-                // Update the 'startedAt' value in storage
-                await new Promise(( resolve, reject ) => {
-                    chrome.storage.local.set({startedAt: startedAt}, () => {
-                        if (chrome.runtime.lastError) {
-                            reject(chrome.runtime.lastError);
-                        } else {
-                            resolve();
-                        }
-                    });
-                });
+    const initStopwatch = async () => {
+        let startedAt = new Date().getTime();
+
+        const storageData = await new Promise(( resolve, reject ) => {
+            chrome.storage.session.get(['startedAt', 'pausedAt'], ( result ) => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        if (storageData.pausedAt) {
+            elapsedPausedTime = storageData.pausedAt;
+        }
+
+        if (storageData.startedAt) {
+            startedAt = storageData.startedAt;
+        } else {
+            await chrome.storage.session.set({startedAt: startedAt});
+        }
+
+        if (!stopwatchInterval) {
+            startTime = startedAt - elapsedPausedTime;
+            stopwatchInterval = setInterval(updateStopwatch, 1000);
+        }
+    };
+
+    const startStopwatch = async ( displayElement, manualStart = true ) => {
+        api.startTask(currentTaskId);
+
+        timeTrackedDisplay = displayElement;
+        try {
+            const isRunning = await getStopwatchRunningState();
+
+            if (isRunning) {
+                await initStopwatch();
+            } else if (!isRunning && manualStart) {
+                await initStopwatch();
+                await setStopwatchRunningState(true);
             }
 
-            if (storageData.pausedAt) {
-                startTime = startedAt - storageData.pausedAt;
-            } else {
-                startTime = startedAt - elapsedPausedTime;
-            }
-
-            if (!stopwatchInterval) {
-                stopwatchInterval = setInterval(updateStopwatch, 1000);
-            }
+            return isRunning;
         } catch (error) {
             console.error('Error occurred:', error);
         }
 
-        return isRunning;
     };
 
-    const pauseStopwatch = ( isReset = false ) => {
+    const pauseStopwatch = async (isReset = false) => {
         clearInterval(stopwatchInterval);
         elapsedPausedTime = new Date().getTime() - startTime;
         stopwatchInterval = null;
 
+        await setStopwatchRunningState(false);
         if (isReset) {
             // Remove both 'startedAt' and 'pausedAt' from storage
-            return chrome.storage.local.remove(['startedAt', 'pausedAt']);
-        } else {
-            // Update 'pausedAt' value in storage
-            return chrome.storage.local.set({pausedAt: elapsedPausedTime});
+            return chrome.storage.session.remove(['startedAt', 'pausedAt']);
         }
     };
+
+    // const pauseStopwatch = ( isReset = false ) => {
+    //     clearInterval(stopwatchInterval);
+    //     elapsedPausedTime = new Date().getTime(); // Store the current timestamp when paused
+    //     stopwatchInterval = null;
+    //
+    //     if (isReset) {
+    //         // Remove both 'startedAt' and 'pausedAt' from storage
+    //         return chrome.storage.session.remove(['startedAt', 'pausedAt']);
+    //     } else {
+    //         // Update 'pausedAt' value in storage
+    //         return chrome.storage.session.set({pausedAt: elapsedPausedTime});
+    //     }
+    // };
+
 
     const resetStopwatch = () => {
         pauseStopwatch(true);

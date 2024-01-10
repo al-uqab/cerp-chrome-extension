@@ -33,11 +33,13 @@ const initializeSessionControls = () => {
     const timeTrackedDisplay = document.querySelector('.ce-timetracking-time');
 
     const handleStartButtonClick = () => {
-        stopwatch.startStopwatch(timeTrackedDisplay).then(r => startedStyles());
+        startedStyles();
+        stopwatch.startStopwatch(timeTrackedDisplay);
     };
 
     const handlePauseButtonClick = () => {
-        stopwatch.pauseStopwatch().then(r => pausedStyles());
+        pausedStyles()
+        stopwatch.pauseStopwatch();
     };
 
     const handleEndButtonClick = () => {
@@ -59,7 +61,7 @@ const buildUI = async () => {
 
 document.addEventListener('DOMContentLoaded', async () => {
     const timeTrackedDisplay = document.querySelector('.ce-timetracking-time');
-    await stopwatch.startStopwatch(timeTrackedDisplay).then(( isRunning ) => {
+    await stopwatch.startStopwatch(timeTrackedDisplay, false).then(( isRunning ) => {
         if (isRunning) return startedStyles();
         return pausedStyles();
     });
