@@ -1,7 +1,8 @@
 'use strict';
 
-import storage from './storage.js';
-import ui      from './interface.js';
+import storage   from './storage.js';
+import ui        from './interface.js';
+import chromeApi from './chromeApi.js';
 
 const BASE_URL = 'https://dev.contenterp.com/api/v2';
 const storageData = storage.getValues();
@@ -59,6 +60,7 @@ const api = {
 
                 if (responseData.code === 200) {
                     storage.clear(); // Clear all stored credentials
+                    chromeApi.clear();
                     return window.location.href = 'index.html'; // Redirect to login page
                 } else {
                     console.error('Logout failed:', responseData.message); // Handle unsuccessful logout
