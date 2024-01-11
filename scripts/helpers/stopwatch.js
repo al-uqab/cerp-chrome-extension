@@ -37,7 +37,31 @@ const createStopwatch = () => {
         });
     };
 
-    const initStopwatch = async ( isRunning = false ) => {
+    const getStopwatchPausedState = () => {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get(['isStopwatchPaused'], (result) => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                } else {
+                    resolve(result.isStopwatchPaused || false);
+                }
+            });
+        });
+    };
+
+    const setStopwatchPausedState = (isPaused) => {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.set({ isStopwatchPaused: isPaused }, () => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    };
+
+    const initStopwatch = async ( isRunning = false, isPaused = false ) => {
         let startedAt = new Date().getTime();
 
         const storageData = await new Promise(( resolve, reject ) => {
@@ -50,14 +74,16 @@ const createStopwatch = () => {
             });
         });
 
+        console.log(storageData);
+
         if (storageData.startedAt) {
             startedAt = storageData.startedAt;
         } else {
             await chrome.storage.session.set({startedAt: startedAt});
         }
 
-        if (storageData.pausedAt && !isRunning) {
-            startTime = new Date().getTime() + storageData.pausedAt;
+        if (storageData.pausedAt && isPaused) {
+            return updateStopwatch(storageData.pausedAt);
         } else if (isRunning) {
             startTime = startedAt - elapsedPausedTime;
         } else {
@@ -81,6 +107,13 @@ const createStopwatch = () => {
             } else if (!isRunning && manualStart) {
                 await initStopwatch();
                 await setStopwatchRunningState(true);
+                await setStopwatchPausedState(false);
+            } else {
+                const isPaused = await getStopwatchPausedState();
+
+                if (isPaused) {
+                    await initStopwatch(false, true);
+                }
             }
 
             return isRunning;
@@ -95,27 +128,16 @@ const createStopwatch = () => {
         elapsedPausedTime = new Date().getTime() - startTime;
         stopwatchInterval = null;
 
-        await setStopwatchRunningState(false);
         if (isReset) {
             // Remove both 'startedAt' and 'pausedAt' from storage
+            await chrome.storage.local.remove(['isStopwatchPaused', 'isStopwatchRunning']);
             return chrome.storage.session.remove(['startedAt', 'pausedAt']);
+        } else {
+            await chrome.storage.session.set({ pausedAt: elapsedPausedTime });
+            await setStopwatchRunningState(false);
+            await setStopwatchPausedState(true);
         }
     };
-
-    // const pauseStopwatch = ( isReset = false ) => {
-    //     clearInterval(stopwatchInterval);
-    //     elapsedPausedTime = new Date().getTime(); // Store the current timestamp when paused
-    //     stopwatchInterval = null;
-    //
-    //     if (isReset) {
-    //         // Remove both 'startedAt' and 'pausedAt' from storage
-    //         return chrome.storage.session.remove(['startedAt', 'pausedAt']);
-    //     } else {
-    //         // Update 'pausedAt' value in storage
-    //         return chrome.storage.session.set({pausedAt: elapsedPausedTime});
-    //     }
-    // };
-
 
     const resetStopwatch = () => {
         pauseStopwatch(true);
@@ -127,9 +149,14 @@ const createStopwatch = () => {
         displayTime(0, 0, 0);
     };
 
-    const updateStopwatch = () => {
-        const currentTime = new Date().getTime();
-        const elapsedTime = currentTime - startTime;
+    const updateStopwatch = (elapsedPausedTime = 0) => {
+        let elapsedTime;
+        if (!elapsedPausedTime) {
+            const currentTime = new Date().getTime();
+            elapsedTime = currentTime - startTime;
+        } else {
+            elapsedTime = elapsedPausedTime;
+        }
         const {seconds, minutes, hours} = calculateTimeComponents(elapsedTime);
 
         displayTime(seconds, minutes, hours);

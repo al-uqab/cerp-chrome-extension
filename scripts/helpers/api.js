@@ -49,6 +49,8 @@ const api = {
 
     logout: async () => {
         ui.injectPreloader();
+        storage.clear(); // Clear all stored credentials
+        chromeApi.clear();
         try {
             const token = storageData.token;
             const response = await fetch(`${BASE_URL}/auth/logout`, {
@@ -59,8 +61,6 @@ const api = {
                 const responseData = await response.json();
 
                 if (responseData.code === 200) {
-                    storage.clear(); // Clear all stored credentials
-                    chromeApi.clear();
                     return window.location.href = 'index.html'; // Redirect to login page
                 } else {
                     console.error('Logout failed:', responseData.message); // Handle unsuccessful logout
