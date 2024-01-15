@@ -72,6 +72,7 @@ const api = {
             console.error('Error:', error); // Handle fetch or other errors
         }
         ui.removePreloader();
+        return window.location.href = 'index.html'; // Redirect to login page
     },
 
     fetchTasks: async () => {

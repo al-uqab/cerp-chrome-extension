@@ -8,6 +8,7 @@ const createStopwatch = () => {
     let elapsedPausedTime = 0;
     let timeTrackedDisplay = null;
     let currentTaskId = null;
+    let resumedBeforePopupDismiss = false;
 
     const setCurrentTaskId = ( id ) => {
         currentTaskId = id;
@@ -61,7 +62,7 @@ const createStopwatch = () => {
         });
     };
 
-    const initStopwatch = async ( isRunning = false, isPaused = false ) => {
+    const initStopwatch = async ( isRunning = false, isPaused = false, manualStart = false ) => {
         let startedAt = new Date().getTime();
 
         const storageData = await new Promise(( resolve, reject ) => {
@@ -74,18 +75,34 @@ const createStopwatch = () => {
             });
         });
 
-        console.log(storageData);
-
-        if (storageData.startedAt) {
+        if (manualStart && storageData.startedAt) {
+            startedAt = storageData.startedAt;
+            await chrome.storage.session.set({ startedAt: startedAt });
+        } else if (storageData.startedAt) {
             startedAt = storageData.startedAt;
         } else {
             await chrome.storage.session.set({startedAt: startedAt});
         }
 
-        if (storageData.pausedAt && isPaused) {
+
+        if (storageData.pausedAt && isPaused && !manualStart) {
             return updateStopwatch(storageData.pausedAt);
-        } else if (isRunning) {
+        } else if (isRunning && !storageData.pausedAt) {
+            resumedBeforePopupDismiss = true;
             startTime = startedAt - elapsedPausedTime;
+        } else if (storageData.pausedAt) {
+            let startingPoint = new Date().getTime() - storageData.pausedAt;
+            if (resumedBeforePopupDismiss) {
+                startingPoint = new Date().getTime();
+            }
+            
+            if (manualStart) {
+                storageData.pausedAt = null;
+                resumedBeforePopupDismiss = true;
+                await chrome.storage.session.remove(['pausedAt']);
+            };
+            if(!resumedBeforePopupDismiss) await chrome.storage.session.set({ startedAt: startingPoint });
+            startTime = startingPoint - elapsedPausedTime;
         } else {
             startTime = new Date().getTime() - elapsedPausedTime;
         }
@@ -101,16 +118,15 @@ const createStopwatch = () => {
         timeTrackedDisplay = displayElement;
         try {
             const isRunning = await getStopwatchRunningState();
+            const isPaused = await getStopwatchPausedState();
 
             if (isRunning) {
                 await initStopwatch(true);
             } else if (!isRunning && manualStart) {
-                await initStopwatch();
+                await initStopwatch(isRunning, isPaused, true);
                 await setStopwatchRunningState(true);
                 await setStopwatchPausedState(false);
             } else {
-                const isPaused = await getStopwatchPausedState();
-
                 if (isPaused) {
                     await initStopwatch(false, true);
                 }
