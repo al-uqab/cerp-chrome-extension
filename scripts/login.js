@@ -1,8 +1,7 @@
 'use strict';
 
 import storage from './helpers/storage.js';
-import api     from './helpers/api.js';
-import ui      from './helpers/interface.js';
+import api from './helpers/api.js';
 
 
 const isLoggedIn = storage.getValues().token || false;

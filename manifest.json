@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ContentERP",
   "short_name": "CERP",
-  "version": "1.1",
+  "version": "1.2",
   "description": "Streamline content management with the ContentERP Google Extension.",
   "icons": {
     "16": "images/icons/icon-16.png",

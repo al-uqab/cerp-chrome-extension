@@ -1,7 +1,7 @@
 'use strict';
 
-import storage         from './storage.js';
-import api             from './api.js';
+import storage from './storage.js';
+import api from './api.js';
 
 const storageData = storage.getValues();
 
@@ -39,6 +39,18 @@ const ui = {
         return false;
     },
 
+    buildStats: async () => {
+        try {
+            const stats = await api.getUserStats();
+            if (!stats || stats.code !== 200) {
+                return;
+            }
+        } catch (error) {
+            console.error('Error building stats:', error);
+            console.error(error.stack); // log error stack trace for debugging purposes
+        }
+    },
+
     buildTasks: async () => {
         let currentTaskId;
         try {
@@ -47,30 +59,31 @@ const ui = {
                 return;
             }
 
-            const {mainKeyword: taskTitle, tasks: taskSubTasks} = tasks.data[0];
+            const taskTitle = tasks.data.content.mainKeyword;
+            const taskSubTasks = tasks.data.subtasks;
 
             const firstIncompleteTask = taskSubTasks.find(task => !task.completed);
             const remainingTasks = taskSubTasks.filter(task => task !== firstIncompleteTask);
 
             const currentTaskContent = document.querySelector('.ce-task__title--main');
             const currentTaskTitle = document.querySelector('.ce-task__title--task');
-            currentTaskContent.innerText = `${taskTitle}:`;
-            currentTaskTitle.innerText = firstIncompleteTask?.requirement || '';
+            currentTaskContent.innerText = `${taskTitle}`;
+            currentTaskTitle.innerText = firstIncompleteTask?.description || '';
 
             const tasksContainer = document.querySelector('.ce-timetracking__tasks');
             tasksContainer.innerHTML = '';
 
-            currentTaskId = firstIncompleteTask.id;
+            currentTaskId = tasks.data.id;
 
+            tasksContainer.appendChild(currentTaskContent);
             remainingTasks.unshift(firstIncompleteTask);
             const tasksToDisplay = remainingTasks.slice(0, 3);
             tasksToDisplay.forEach(task => {
                 const article = createTaskElement('article', 'ce-tasks__task');
-                article.setAttribute('data-id', task.id);
 
                 const h5 = createTaskElement('h5', 'ce-task__title');
                 h5.style.opacity = '0.5';
-                h5.textContent = task.requirement;
+                h5.textContent = task.description;
 
                 article.appendChild(h5);
                 tasksContainer.appendChild(article);
@@ -107,13 +120,13 @@ const ui = {
     },
 };
 
-const createTaskElement = ( tagName, className ) => {
+const createTaskElement = (tagName, className) => {
     const element = document.createElement(tagName);
     element.classList.add(className);
     return element;
 };
 
-const formatLoggedTime = ( loggedMinutes ) => {
+const formatLoggedTime = (loggedMinutes) => {
     const hours = Math.floor(loggedMinutes / 60);
     const minutes = loggedMinutes % 60;
     const seconds = 0; // Assuming seconds are always 0 in this context
@@ -125,7 +138,7 @@ const formatLoggedTime = ( loggedMinutes ) => {
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
 
-const createSessionElement = ( task ) => {
+const createSessionElement = (task) => {
     const article = createTaskElement('article', 'ce-sessions__session');
     const sessionTitle = createTaskElement('div', 'ce-sessions__session--title');
 
@@ -134,12 +147,19 @@ const createSessionElement = ( task ) => {
     sessionTitle.appendChild(editIcon);
 
     const sessionTask = createTaskElement('h5', 'ce-sessions__session--task');
-    const taskRequirement = document.createTextNode(task.task.requirement);
+    const taskRequirement = document.createTextNode(task.task.content.mainKeyword);
     const taskLoggedTime = createTaskElement('span', 'ce-sessions__session--highlight');
     taskLoggedTime.textContent = formatLoggedTime(task.loggedMinutes);
+    const taskStatus = createTaskElement('span', 'ce-sessions__session--highlight');
+    const statusText = task.task.content.status.replace(/_/g, ' ').toLowerCase();
+    taskStatus.textContent = statusText;
+
+    taskStatus.style.fontWeight = 'bold';
+    taskStatus.style.fontStyle = 'italic';
 
     sessionTask.appendChild(taskRequirement);
     sessionTask.appendChild(taskLoggedTime);
+    sessionTask.appendChild(taskStatus);
     sessionTitle.appendChild(sessionTask);
 
     article.appendChild(sessionTitle);

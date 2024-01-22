@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@500;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:ital,wght@500;0,700;1,400;1,700&display=swap');
 
 body#ce-extension {
     background-color: #f8f8f8;
@@ -9,6 +9,7 @@ body#ce-extension {
     margin: 0;
     padding: 0;
 }
+
 body#ce-extension * {
     box-sizing: border-box;
 }
@@ -127,6 +128,26 @@ body#ce-extension * {
     margin: 0;
 }
 
+.ce-task__title--main {
+    align-items: center;
+    color: #fff;
+    column-gap: 5px;
+    display: flex;
+    font-weight: 700;
+    margin-bottom: 5px;
+    opacity: 1;
+    text-align: left;
+    text-transform: capitalize;
+}
+
+.ce-task__title--main::after {
+    background-color: white;
+    content: "";
+    display: block;
+    flex-grow: 1;
+    height: 1px;
+    opacity: 0.5;
+}
 .ce-task__actions {
     column-gap: 5px;
     display: flex;

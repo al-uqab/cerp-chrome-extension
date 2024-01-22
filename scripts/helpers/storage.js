@@ -2,6 +2,10 @@
 
 const storage = {
     getValues: () => {
+        if (typeof localStorage === 'undefined') {
+            return {};
+        }
+
         return {
             token: localStorage.getItem('accessToken') || '',
             userId: localStorage.getItem('userId') || '',
@@ -9,7 +13,12 @@ const storage = {
         };
     },
 
-    setValues: ( {token = '', userId = '', userName = ''} ) => {
+    setValues: ({ token = '', userId = '', userName = '' }) => {
+        if (typeof localStorage === 'undefined') {
+            console.error('localStorage is not available in this context.');
+            return;
+        }
+
         if (token) {
             localStorage.setItem('accessToken', token);
         }
@@ -22,6 +31,11 @@ const storage = {
     },
 
     clear: () => {
+        if (typeof localStorage === 'undefined') {
+            console.error('localStorage is not available in this context.');
+            return;
+        }
+
         localStorage.removeItem('accessToken');
         localStorage.removeItem('userId');
         localStorage.removeItem('userName');
