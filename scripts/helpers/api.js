@@ -30,13 +30,19 @@ const formatDate = (date) => {
 };
 
 const api = {
-    login: async (email, password) => {
+    login: async (email, password, organizationId) => {
         ui.injectPreloader();
+        const body = {};
+        body.email = email;
+        body.password = password;
+        if(organizationId) {
+            body.organizationId = organizationId;
+        }
         try {
             const response = await fetch(`${BASE_URL}/auth/login`, {
                 method: 'POST', headers: {
                     'Content-Type': 'application/json',
-                }, body: JSON.stringify({ email, password }),
+                }, body: JSON.stringify(body),
             });
 
             const responseData = await response.json();
@@ -45,13 +51,17 @@ const api = {
                 return { success: true, credentials: responseData };
             } else {
                 ui.removePreloader();
-                return { success: false, message: 'Invalid email or password' };
+                return { success: false, message: 'Invalid email or password', response: responseData };
             }
         } catch (error) {
             ui.removePreloader();
             console.error('Error during login:', error);
             return { success: false, message: 'An error occurred during login' };
         }
+    },
+
+    loginWithOrg: async (email, password, org) => {
+
     },
 
     logout: async () => {

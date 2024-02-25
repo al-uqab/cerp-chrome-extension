@@ -17,7 +17,7 @@
         </div>
     </header>
 
-    <div class="ce-login__content">
+    <div class="ce-login__content" id="main">
         <button class="ce-login__btn--google">
             <img class="ce-login__btn-icon" alt="Google icon" src="images/google-icon.svg">
             Continue with Google
@@ -27,6 +27,16 @@
             <span class="ce-login__or-word">or</span>
             <span class="ce-login__line ce-login__line--right"></span>
         </div>
+
+        <div class="ce-login__account">
+            <label class="ce-login__type">
+                <input type="radio" name="userType" value="owner" required disabled> Owner
+            </label>
+            <label class="ce-login__type">
+                <input type="radio" name="userType" value="writer" checked> Writer
+            </label>
+        </div>
+
         <form id="loginForm" class="ce-login__form">
             <div class="ce-login__field">
                 <label class="ce-login__label" for="email">E-mail</label>
@@ -44,6 +54,10 @@
             <button class="ce-login__btn--signin">Sign in</button>
         </form>
         <p class="ce-login__text">Don’t have an account?<span class="ce-login__signup">Sign up</span></p>
+    </div>
+
+    <div class="ce-login__choose-org" style="display: none;">
+        <h4 class="ce-login__choose-org__title">Choose an org to log into</h4>
     </div>
 </main>
 <script src="scripts/login.js" type="module"></script>
