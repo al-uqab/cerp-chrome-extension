@@ -119,14 +119,15 @@ body#ce-extension {
 }
 
 .ce-login__type {
-    background-color: #dddddd;
-    color: #000;
-    padding: 10px 20px;
+    background-color: #e2e2e2;
+    color: #b2b2b2;
+    padding: 5px;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 48%;
+    border: 1px solid #0000001a;
 }
 
 .ce-login__form {

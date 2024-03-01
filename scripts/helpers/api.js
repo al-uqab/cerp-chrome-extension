@@ -108,14 +108,19 @@ const api = {
 
     getUserStats: async () => {
         try {
-            // Calculate the "from" and "to" dates for the last 7 days
-            const toDate = new Date();
-            const fromDate = new Date();
-            fromDate.setDate(fromDate.getDate() - 6); // Subtract 6 days for a total of 7 days
+            const today = new Date();
+
+            // Calculate the end date (current Sunday)
+            const endDate = new Date(today);
+            endDate.setDate(today.getDate() - today.getDay()); // Set to the most recent Sunday
+
+            // Calculate the start date (previous Sunday)
+            const startDate = new Date(endDate);
+            startDate.setDate(endDate.getDate() - 6); // Subtract 6 days for a total of 7 days
 
             // Format the dates as YYYY-MM-DD
-            const formattedTo = formatDate(toDate);
-            const formattedFrom = formatDate(fromDate);
+            const formattedTo = formatDate(endDate);
+            const formattedFrom = formatDate(startDate);
 
             const endpoint = `${BASE_URL}/time-trackings/user/${storageData.userId}/minutes-by-daterange?from=${formattedFrom}&to=${formattedTo}`;
 
@@ -131,6 +136,37 @@ const api = {
             return [];
         }
     },
+
+    getUserWeekStats: async () => {
+        try {
+            const today = new Date();
+
+            // Calculate the end date (current day)
+            const endDate = new Date(today);
+
+            // Calculate the start date (most recent Sunday)
+            const startDate = new Date(today);
+            startDate.setDate(today.getDate() - (today.getDay() + 6) % 7); // Set to the most recent Sunday
+
+            // Format the dates as YYYY-MM-DD
+            const formattedTo = formatDate(endDate);
+            const formattedFrom = formatDate(startDate);
+
+            const endpoint = `${BASE_URL}/time-trackings/user/${storageData.userId}/minutes-by-daterange?from=${formattedFrom}&to=${formattedTo}`;
+
+            const response = await fetch(endpoint, {
+                method: 'GET',
+                headers: getAuthHeader(),
+            });
+
+            const stats = await handleFetchErrors(response);
+            return stats;
+        } catch (error) {
+            console.error('Error fetching sessions:', error);
+            return [];
+        }
+    },
+
 
     fetchSessions: async () => {
         try {

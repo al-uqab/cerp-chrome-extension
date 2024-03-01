@@ -42,7 +42,13 @@ const ui = {
     buildStats: async () => {
         try {
             const stats = await api.getUserStats();
-            if (!stats || stats.code !== 200) {
+            const weekStats = await api.getUserWeekStats();
+            if (stats.code === 200 && weekStats.code === 200) {
+                console.log(weekStats);
+                const element = document.getElementById('week-tracked-time');
+                const lastWeekElement = document.getElementById('last-week-tracked-time');
+                element.innerText = `${weekStats.data} Minutes`;
+                lastWeekElement.innerText = `${stats.data} Minutes`;
                 return;
             }
         } catch (error) {
@@ -77,14 +83,29 @@ const ui = {
 
             tasksContainer.appendChild(currentTaskContent);
             remainingTasks.unshift(firstIncompleteTask);
-            const tasksToDisplay = remainingTasks.slice(0, 3);
+            const tasksToDisplay = remainingTasks;
+            console.log(tasksToDisplay);
             tasksToDisplay.forEach(task => {
                 const article = createTaskElement('article', 'ce-tasks__task');
 
                 const h5 = createTaskElement('h5', 'ce-task__title');
-                h5.style.opacity = '0.5';
                 h5.textContent = task.description;
 
+                const checkmarkImg = document.createElement('img');
+                checkmarkImg.classList.add('ce-task__checkmark');
+                checkmarkImg.setAttribute('width', '12');
+                checkmarkImg.setAttribute('height', '12');
+                checkmarkImg.setAttribute('src', 'images/icons/checkmark.svg');
+
+                const emptyBox = document.createElement('span');
+                emptyBox.classList.add('ce-task__emptybox');
+
+                if (task.completed) {
+                    article.appendChild(checkmarkImg);
+                    h5.style.opacity = '0.5';
+                } else {
+                    article.appendChild(emptyBox);
+                };
                 article.appendChild(h5);
                 tasksContainer.appendChild(article);
             });

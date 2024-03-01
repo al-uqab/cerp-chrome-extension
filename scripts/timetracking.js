@@ -11,7 +11,7 @@ const getElement = (id) => document.getElementById(id);
 const hideElement = (element) => {
     element.style.display = 'none';
 };
-const showElement = (element, displayType = 'inline-block') => {
+const showElement = (element, displayType = 'inline-flex') => {
     element.style.display = displayType;
 };
 
@@ -20,13 +20,13 @@ const pauseSessionButton = getElement('pauseTaskButton');
 const endSessionButton = getElement('endTaskButton');
 
 const pausedStyles = () => {
-    hideElement(pauseSessionButton);
+    hideElement(endSessionButton);
     showElement(startSessionButton);
 };
 
 const startedStyles = () => {
     hideElement(startSessionButton);
-    showElement(pauseSessionButton);
+    showElement(endSessionButton);
 };
 
 const initializeSessionControls = () => {

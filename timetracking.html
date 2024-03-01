@@ -12,8 +12,8 @@
     <header class="ce-timetracking__header">
         <div class="ce-timetracking__content">
             <div class="ce-timetracking__page-heading">
-                <img class="ce-timetracking__heading-icon" alt="logo" src="images/icons/cerp-icon-white.png">
-                <h3 class="ce-timetracking__heading-title">Timetracking</h3>
+                <img class="ce-timetracking__heading-icon" alt="app icon" src="images/icons/cerp-icon.png">
+                <h3 class="ce-timetracking__heading-title">Timetracker</h3>
             </div>
             <nav class="ce-timetracking__user-info">
                 <h2 id="userName" class="ce-timetracking__username">Guest User</h2>
@@ -48,6 +48,7 @@
             </div>
             <div class="ce-task__actions">
                 <button class="ce-task__action" id="startTaskButton">
+                    Start Session
                     <img alt="Start icon" class="ce-action__icon"
                          src="images/icons/start-session.svg">
                 </button>
@@ -56,6 +57,7 @@
                          src="images/icons/pause-session.svg">
                 </button>
                 <button class="ce-task__action" id="endTaskButton">
+                    End Session
                     <img alt="End icon" class="ce-action__icon"
                          src="images/icons/end-session.svg">
                 </button>
@@ -73,17 +75,16 @@
     <div class="ce-timetracking__sessions">
         <header class="ce-timetracking__sessions--title">
             <h4 class="ce-timetracking__sessions--heading">Sessions</h4>
-            <a href="https://contenterp.com/" target="_blank" class="ce-timetracking__sessions--subheading">Show more <img
+            <a href="https://app.contenterp.com" target="_blank" class="ce-timetracking__sessions--subheading">Show more <img
                     alt="" src="images/icons/show-more.svg"></a>
         </header>
         <section class="ce-sessions__charts">
             <div class="ce-charts__card">
                 <h6 class="ce-charts__card--title">
                     Time
-<!--                     <img alt="" src="images/icons/watch.svg"> -->
                 </h6>
                 <div class="ce-charts__card--content">
-                    <span class="ce-charts__card--highlight">No Data Yet</span>
+                    <span class="ce-charts__card--highlight" id="week-tracked-time">No Data Yet</span>
                 </div>
             </div>
             <div class="ce-charts__card">
@@ -99,7 +100,7 @@
                     Last week
                 </h6>
                 <div class="ce-charts__card--content">
-                    <span class="ce-charts__card--highlight">No Data Yet</span>
+                    <span class="ce-charts__card--highlight" id="last-week-tracked-time">No Data Yet</span>
                 </div>
             </div>
         </section>
