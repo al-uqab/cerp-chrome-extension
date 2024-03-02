@@ -35,7 +35,7 @@ const api = {
         const body = {};
         body.email = email;
         body.password = password;
-        if(organizationId) {
+        if (organizationId) {
             body.organizationId = organizationId;
         }
         try {
@@ -62,7 +62,7 @@ const api = {
 
     getUserSettings: async () => {
         const userId = storageData.userId;
-        if(!userId) return;
+        if (!userId) return;
 
         try {
             const response = await fetch(`${BASE_URL}/users/${userId}`, {
@@ -257,6 +257,9 @@ const api = {
 
             if (response.ok) {
                 const responseData = await response.json();
+
+                const currentDateTime = new Date().toISOString();
+                storage.setValues({ lastSynced: currentDateTime });
             } else {
                 console.error('Error sending task time:', response.status); // Handle error cases
             }
@@ -264,6 +267,13 @@ const api = {
             console.error('Error:', error); // Handle fetch or other errors
         }
     },
+
+    sendDailyReport: async () => {
+        try {
+        } catch (error) {
+            console.error('Error Syncing:', error); // Handle fetch or other errors
+        }
+    }
 };
 
 export default api;

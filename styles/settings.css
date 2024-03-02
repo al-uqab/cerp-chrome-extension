@@ -83,6 +83,7 @@ body#ce-extension {
     display: flex;
     flex-direction: column;
     height: 100%;
+    row-gap: 3px;
 }
 
 .ce-user-details__name {
@@ -101,7 +102,6 @@ body#ce-extension {
 
 .ce-user-details__member-since {
     color: #14213d40;
-    margin-top: auto;
 }
 
 .ce-user-details__link-icon {

@@ -61,10 +61,11 @@ const handleSuccessfulLogin = (response) => {
     const userData = response.credentials.data.user;
     const accessToken = response.credentials.data.accessToken;
 
-    const { id, firstName, lastName } = userData;
+    const { id, firstName, lastName, role, createdAt } = userData;
+    const userFullName = `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName)}.`
     const formattedUserName = `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(lastName.charAt(0))}.`;
 
-    storage.setValues({ token: accessToken, userId: id, userName: formattedUserName });
+    storage.setValues({ token: accessToken, userId: id, userFullName: userFullName, userName: formattedUserName, userRole: role, memberSince: createdAt });
     return window.location.href = 'timetracking.html';
 };
 

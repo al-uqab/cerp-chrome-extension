@@ -9,12 +9,16 @@ const storage = {
         return {
             token: localStorage.getItem('accessToken') || '',
             userId: localStorage.getItem('userId') || '',
+            userFullName: localStorage.getItem('userFullName') || '',
             userName: localStorage.getItem('userName') || '',
-            userProfilePicture: sessionStorage.getItem('userProfilePicture') || ''
+            userRole: localStorage.getItem('userRole') || '',
+            memberSince: localStorage.getItem('memberSince') || '',
+            userProfilePicture: sessionStorage.getItem('userProfilePicture') || '',
+            lastSynced: localStorage.getItem('lastSynced') || ''
         };
     },
 
-    setValues: ({ token = '', userId = '', userName = '', userProfilePicture = '' }) => {
+    setValues: ({ token = '', userId = '', userFullName = '', userName = '', userRole = '', memberSince = '', userProfilePicture = '', lastSynced = '' }) => {
         if (typeof localStorage === 'undefined') {
             console.error('localStorage is not available in this context.');
             return;
@@ -26,11 +30,23 @@ const storage = {
         if (userId) {
             localStorage.setItem('userId', userId);
         }
+        if (userFullName) {
+            localStorage.setItem('userFullName', userFullName);
+        }
         if (userName) {
             localStorage.setItem('userName', userName);
         }
-        if(userProfilePicture) {
+        if (userRole) {
+            localStorage.setItem('userRole', userRole);
+        }
+        if (memberSince) {
+            localStorage.setItem('memberSince', memberSince);
+        }
+        if (userProfilePicture) {
             sessionStorage.setItem('userProfilePicture', userProfilePicture)
+        }
+        if (lastSynced) {
+            localStorage.setItem('lastSynced', lastSynced);
         }
     },
 
@@ -42,8 +58,12 @@ const storage = {
 
         localStorage.removeItem('accessToken');
         localStorage.removeItem('userId');
+        localStorage.removeItem('userFullName');
         localStorage.removeItem('userName');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('memberSince');
         sessionStorage.removeItem('userProfilePicture');
+        localStorage.removeItem('lastSynced');
     },
 };
 

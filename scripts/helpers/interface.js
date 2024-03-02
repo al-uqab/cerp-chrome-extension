@@ -164,6 +164,42 @@ const ui = {
             console.error(error.stack); // log error stack trace for debugging purposes
         }
     },
+
+    setLastSynced: () => {
+        const lastSyncedElement = document.getElementById('last-synced');
+
+        if (storageData.lastSynced) {
+            const timeAgo = calculateLastSynced(storageData.lastSynced);
+            lastSyncedElement.innerText = `Last Synced: ${timeAgo}`;
+        }
+    },
+
+    buildSettings: () => {
+        setInterval(() => {
+            ui.setLastSynced();
+        }, 1000);
+
+        const nameElement = document.querySelector('.ce-user-details__name');
+        const userFullName = storageData.userFullName;
+        if (nameElement && userFullName) {
+            nameElement.innerText = userFullName;
+        }
+
+        const roleElement = document.querySelector('.ce-user-details__role');
+        const userRole = storageData.userRole;
+        if (roleElement && userRole) {
+            roleElement.innerText = userRole;
+        }
+
+        const memberSinceElement = document.querySelector('.ce-user-details__member-since');
+        const memberSince = storageData.memberSince;
+        if (memberSinceElement && memberSince) {
+            const memberSinceDate = new Date(memberSince);
+            const formattedDate = `${memberSinceDate.getDate()} ${getMonthAbbreviation(memberSinceDate.getMonth())} ${memberSinceDate.getFullYear()}`;
+
+            memberSinceElement.innerText = `Member Since: ${formattedDate}`;
+        }
+    }
 };
 
 const createTaskElement = (tagName, className) => {
@@ -230,5 +266,30 @@ const createSessionElement = (task) => {
 
     return article;
 };
+
+const getMonthAbbreviation = (monthIndex) => {
+    const months = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    return months[monthIndex];
+};
+
+const calculateLastSynced = (lastSynced) => {
+    // Calculate the time difference
+    const lastSyncedTime = new Date(lastSynced);
+    const currentTime = new Date();
+    const timeDifferenceInSeconds = Math.floor((currentTime - lastSyncedTime) / 1000);
+
+    if (timeDifferenceInSeconds < 60) {
+        return `${timeDifferenceInSeconds} s ago`;
+    } else if (timeDifferenceInSeconds < 3600) {
+        const minutes = Math.floor(timeDifferenceInSeconds / 60);
+        return `${minutes} m ago`;
+    } else {
+        const hours = Math.floor(timeDifferenceInSeconds / 3600);
+        return `${hours} h ago`;
+    }
+}
 
 export default ui;
