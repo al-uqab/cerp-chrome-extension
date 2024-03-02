@@ -233,6 +233,7 @@ const api = {
     },
 
     startTask: async (taskId) => {
+        if (!taskId) return;
         try {
             const response = await fetch(`${BASE_URL}/tasks/${taskId}/start`, {
                 method: 'POST', headers: getAuthHeader(), body: JSON.stringify({ taskId }),

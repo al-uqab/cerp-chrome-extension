@@ -155,7 +155,8 @@ const ui = {
             const totalSessions = sessions.data.length;
             const lastThreeSessions = sessions.data.slice(Math.max(totalSessions - 3, 0));
 
-            lastThreeSessions.forEach(session => {
+            const reversedSessions = lastThreeSessions.reverse();
+            reversedSessions.forEach(session => {
                 const sessionElement = createSessionElement(session);
                 pastSessionsContainer.appendChild(sessionElement);
             });
