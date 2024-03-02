@@ -60,8 +60,28 @@ const api = {
         }
     },
 
-    loginWithOrg: async (email, password, org) => {
+    getUserSettings: async () => {
+        const userId = storageData.userId;
+        if(!userId) return;
 
+        try {
+            const response = await fetch(`${BASE_URL}/users/${userId}`, {
+                method: 'GET', headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok && responseData.data) {
+                return { success: true, data: responseData.data };
+            } else {
+                return { success: false, message: 'Invalid user id', response: responseData };
+            }
+        } catch (error) {
+            console.error('Error during getting user settings:', error);
+            return { success: false, message: 'An error occurred during getting user settings' };
+        }
     },
 
     logout: async () => {

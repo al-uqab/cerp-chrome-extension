@@ -54,6 +54,7 @@ const initializeSessionControls = () => {
 
 const buildUI = async () => {
     ui.setUser();
+    ui.setProfilePicture();
     await ui.buildStats();
     const currentTaskId = await ui.buildTasks();
     await ui.buildSessions();

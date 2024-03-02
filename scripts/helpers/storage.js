@@ -10,10 +10,11 @@ const storage = {
             token: localStorage.getItem('accessToken') || '',
             userId: localStorage.getItem('userId') || '',
             userName: localStorage.getItem('userName') || '',
+            userProfilePicture: sessionStorage.getItem('userProfilePicture') || ''
         };
     },
 
-    setValues: ({ token = '', userId = '', userName = '' }) => {
+    setValues: ({ token = '', userId = '', userName = '', userProfilePicture = '' }) => {
         if (typeof localStorage === 'undefined') {
             console.error('localStorage is not available in this context.');
             return;
@@ -28,6 +29,9 @@ const storage = {
         if (userName) {
             localStorage.setItem('userName', userName);
         }
+        if(userProfilePicture) {
+            sessionStorage.setItem('userProfilePicture', userProfilePicture)
+        }
     },
 
     clear: () => {
@@ -39,6 +43,7 @@ const storage = {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('userId');
         localStorage.removeItem('userName');
+        sessionStorage.removeItem('userProfilePicture');
     },
 };
 

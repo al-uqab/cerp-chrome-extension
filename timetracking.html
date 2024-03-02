@@ -1,161 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-          name="viewport">
+        name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="styles/global.css" rel="stylesheet">
     <link href="styles/timetracking.css" rel="stylesheet">
 </head>
-<body id="ce-extension">
-<main class="ce-timetracking">
-    <header class="ce-timetracking__header">
-        <div class="ce-timetracking__content">
-            <div class="ce-timetracking__page-heading">
-                <img class="ce-timetracking__heading-icon" alt="app icon" src="images/icons/cerp-icon.png">
-                <h3 class="ce-timetracking__heading-title">Timetracker</h3>
-            </div>
-            <nav class="ce-timetracking__user-info">
-                <h2 id="userName" class="ce-timetracking__username">Guest User</h2>
-                <a href="javascript:void(0)" class="ce-timetracking__link">
-                    <img alt="sync icon" src="images/icons/sync-white.svg">
-                </a>
-                <a href="settings.html" class="ce-timetracking__link">
-                    <img alt="settings icon" src="images/icons/settings-white.svg">
-                </a>
-            </nav>
-        </div>
-        <div class="ce-timetracking-timer">
-            <div class="ce-timetracking-time">
-                <div class="ce-timer__segment">
-                    <time class="ce-timer__digit" datetime="00:00:00" id="hours">
-                        00
-                    </time>
-                    H
-                </div>
-                <div class="ce-timer__segment">
-                    <time class="ce-timer__digit" datetime="00:00:00"
-                          id="minutes">00
-                    </time>
-                    M
-                </div>
-                <div class="ce-timer__segment">
-                    <time class="ce-timer__digit" datetime="00:00:00"
-                          id="seconds">00
-                    </time>
-                    S
-                </div>
-            </div>
-            <div class="ce-task__actions">
-                <button class="ce-task__action" id="startTaskButton">
-                    Start Session
-                    <img alt="Start icon" class="ce-action__icon"
-                         src="images/icons/start-session.svg">
-                </button>
-                <button class="ce-task__action" id="pauseTaskButton">
-                    <img alt="Start icon" class="ce-action__icon"
-                         src="images/icons/pause-session.svg">
-                </button>
-                <button class="ce-task__action" id="endTaskButton">
-                    End Session
-                    <img alt="End icon" class="ce-action__icon"
-                         src="images/icons/end-session.svg">
-                </button>
-            </div>
-            <div class="ce-timetracking__tasks">
-                <article class="ce-tasks__task">
-                    <h5 class="ce-task__title" id="currentTask">
-                        <span class="ce-task__title--main">Current Content:</span>
-                        <span class="ce-task__title--task">task</span>
-                    </h5>
-                </article>
-            </div>
-        </div>
-    </header>
-    <div class="ce-timetracking__sessions">
-        <header class="ce-timetracking__sessions--title">
-            <h4 class="ce-timetracking__sessions--heading">Sessions</h4>
-            <a href="https://app.contenterp.com" target="_blank" class="ce-timetracking__sessions--subheading">Show more <img
-                    alt="" src="images/icons/show-more.svg"></a>
-        </header>
-        <section class="ce-sessions__charts">
-            <div class="ce-charts__card">
-                <h6 class="ce-charts__card--title">
-                    Time
-                </h6>
-                <div class="ce-charts__card--content">
-                    <span class="ce-charts__card--highlight" id="week-tracked-time">No Data Yet</span>
-                </div>
-            </div>
-            <div class="ce-charts__card">
-                <h6 class="ce-charts__card--title">
-                    Sessions
-                </h6>
-                <div class="ce-charts__card--content">
-                    <span class="ce-charts__card--highlight">No Data Yet</span>
-                </div>
-            </div>
-            <div class="ce-charts__card">
-                <h6 class="ce-charts__card--title">
-                    Last week
-                </h6>
-                <div class="ce-charts__card--content">
-                    <span class="ce-charts__card--highlight" id="last-week-tracked-time">No Data Yet</span>
-                </div>
-            </div>
-        </section>
-        <section class="ce-sessions__past--sessions">
-            <article class="ce-sessions__session">
-                <div class="ce-sessions__session--title">
-                    <div>
-                        <img alt="Edit icon" src="images/edit.svg">
-                    </div>
-                    <h5 class="ce-sessions__session--task">
-                        Writing new article<span
-                            class="ce-sessions__session--highlight">01:05
-                        :42</span>
-                    </h5>
-                </div>
-                <div class="ce-sessions__session--actions">
-                    <img alt="" src="images/icons/correct.svg">
-                    <img alt="" src="images/icons/sync-exclamation.svg">
-                </div>
-            </article>
-            <article class="ce-sessions__session">
-                <div class="ce-sessions__session--title">
-                    <div>
-                        <img alt="Edit icon" src="images/edit.svg">
-                    </div>
-                    <h5 class="ce-sessions__session--task">
-                        Writing new article<span
-                            class="ce-sessions__session--highlight">01:05
-                        :42</span>
-                    </h5>
-                </div>
-                <div class="ce-sessions__session--actions">
-                    <img alt="" src="images/icons/correct.svg">
-                    <img alt="" src="images/icons/sync-exclamation.svg">
-                </div>
-            </article>
-            <article class="ce-sessions__session">
-                <div class="ce-sessions__session--title">
-                    <div>
-                        <img alt="Edit icon" src="images/edit.svg">
-                    </div>
-                    <h5 class="ce-sessions__session--task">
-                        Writing new article<span
-                            class="ce-sessions__session--highlight">01:05
-                        :42</span>
-                    </h5>
-                </div>
-                <div class="ce-sessions__session--actions">
-                    <img alt="" src="images/icons/correct.svg">
-                    <img alt="" src="images/icons/sync-exclamation.svg">
-                </div>
-            </article>
-        </section>
 
-</main>
-<script src="scripts/timetracking.js" type="module"></script>
+<body id="ce-extension">
+    <main class="ce-timetracking">
+        <header class="ce-timetracking__header">
+            <div class="ce-timetracking__content">
+                <div class="ce-timetracking__page-heading">
+                    <img class="ce-timetracking__heading-icon" alt="app icon" src="images/icons/cerp-icon.png">
+                    <h3 class="ce-timetracking__heading-title">Timetracker</h3>
+                </div>
+                <div class="ce-timetracking__user-image">
+                    <img id="user-profile-picture" class="ce-timetracking__user-profile-picture" alt="app icon" src="images/user-profile-picture.jpg">
+                </div>
+                <nav class="ce-timetracking__user-info">
+                    <h2 id="userName" class="ce-timetracking__username">Guest User</h2>
+                    <a href="javascript:void(0)" class="ce-timetracking__link">
+                        <img alt="sync icon" src="images/icons/sync-white.svg">
+                    </a>
+                    <a href="settings.html" class="ce-timetracking__link">
+                        <img alt="settings icon" src="images/icons/settings-white.svg">
+                    </a>
+                </nav>
+            </div>
+            <div class="ce-timetracking-timer">
+                <div class="ce-timetracking-time">
+                    <div class="ce-timer__segment">
+                        <time class="ce-timer__digit" datetime="00:00:00" id="hours">
+                            00
+                        </time>
+                        H
+                    </div>
+                    <div class="ce-timer__segment">
+                        <time class="ce-timer__digit" datetime="00:00:00" id="minutes">00
+                        </time>
+                        M
+                    </div>
+                    <div class="ce-timer__segment">
+                        <time class="ce-timer__digit" datetime="00:00:00" id="seconds">00
+                        </time>
+                        S
+                    </div>
+                </div>
+                <div class="ce-task__actions">
+                    <button class="ce-task__action" id="startTaskButton">
+                        Start Session
+                        <img alt="Start icon" class="ce-action__icon" src="images/icons/start-session.svg">
+                    </button>
+                    <button class="ce-task__action" id="pauseTaskButton">
+                        <img alt="Start icon" class="ce-action__icon" src="images/icons/pause-session.svg">
+                    </button>
+                    <button class="ce-task__action" id="endTaskButton">
+                        End Session
+                        <img alt="End icon" class="ce-action__icon" src="images/icons/end-session.svg">
+                    </button>
+                </div>
+                <div class="ce-timetracking__tasks">
+                    <article class="ce-tasks__task">
+                        <h5 class="ce-task__title" id="currentTask">
+                            <span class="ce-task__title--main">Current Content:</span>
+                            <span class="ce-task__title--task">task</span>
+                        </h5>
+                    </article>
+                </div>
+            </div>
+        </header>
+        <div class="ce-timetracking__sessions">
+            <header class="ce-timetracking__sessions--title">
+                <h4 class="ce-timetracking__sessions--heading">Sessions</h4>
+                <a href="https://app.contenterp.com" target="_blank" class="ce-timetracking__sessions--subheading">Show
+                    more <img alt="" src="images/icons/show-more.svg"></a>
+            </header>
+            <section class="ce-sessions__charts">
+                <div class="ce-charts__card">
+                    <h6 class="ce-charts__card--title">
+                        Time
+                    </h6>
+                    <div class="ce-charts__card--content">
+                        <span class="ce-charts__card--highlight" id="week-tracked-time">No Data Yet</span>
+                    </div>
+                </div>
+                <div class="ce-charts__card">
+                    <h6 class="ce-charts__card--title">
+                        Sessions
+                    </h6>
+                    <div class="ce-charts__card--content">
+                        <span class="ce-charts__card--highlight">No Data Yet</span>
+                    </div>
+                </div>
+                <div class="ce-charts__card">
+                    <h6 class="ce-charts__card--title">
+                        Last week
+                    </h6>
+                    <div class="ce-charts__card--content">
+                        <span class="ce-charts__card--highlight" id="last-week-tracked-time">No Data Yet</span>
+                    </div>
+                </div>
+            </section>
+            <section class="ce-sessions__past--sessions">
+                <article class="ce-sessions__session">
+                    <div class="ce-sessions__session--title">
+                        <div>
+                            <img alt="Edit icon" src="images/edit.svg">
+                        </div>
+                        <h5 class="ce-sessions__session--task">
+                            Writing new article<span class="ce-sessions__session--highlight">01:05
+                                :42</span>
+                        </h5>
+                    </div>
+                    <div class="ce-sessions__session--actions">
+                        <img alt="" src="images/icons/correct.svg">
+                        <img alt="" src="images/icons/sync-exclamation.svg">
+                    </div>
+                </article>
+                <article class="ce-sessions__session">
+                    <div class="ce-sessions__session--title">
+                        <div>
+                            <img alt="Edit icon" src="images/edit.svg">
+                        </div>
+                        <h5 class="ce-sessions__session--task">
+                            Writing new article<span class="ce-sessions__session--highlight">01:05
+                                :42</span>
+                        </h5>
+                    </div>
+                    <div class="ce-sessions__session--actions">
+                        <img alt="" src="images/icons/correct.svg">
+                        <img alt="" src="images/icons/sync-exclamation.svg">
+                    </div>
+                </article>
+                <article class="ce-sessions__session">
+                    <div class="ce-sessions__session--title">
+                        <div>
+                            <img alt="Edit icon" src="images/edit.svg">
+                        </div>
+                        <h5 class="ce-sessions__session--task">
+                            Writing new article<span class="ce-sessions__session--highlight">01:05
+                                :42</span>
+                        </h5>
+                    </div>
+                    <div class="ce-sessions__session--actions">
+                        <img alt="" src="images/icons/correct.svg">
+                        <img alt="" src="images/icons/sync-exclamation.svg">
+                    </div>
+                </article>
+            </section>
+
+    </main>
+    <script src="scripts/timetracking.js" type="module"></script>
 </body>
+
 </html>

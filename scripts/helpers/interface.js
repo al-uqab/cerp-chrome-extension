@@ -39,12 +39,35 @@ const ui = {
         return false;
     },
 
+    setProfilePicture: async () => {
+        try {
+            let userProfilePicture = null;
+            if (storageData.userProfilePicture) {
+                userProfilePicture = storageData.userProfilePicture;
+            } else {
+                const userSettings = await api.getUserSettings();
+
+                if (userSettings.data?.profileImage) {
+                    userProfilePicture = userSettings.data.profileImage;
+                    storage.setValues({ userProfilePicture: userProfilePicture });
+                }
+            }
+
+            if (userProfilePicture) {
+                const profilePictureElement = document.getElementById('user-profile-picture');
+                profilePictureElement.src = userProfilePicture;
+            }
+        } catch (error) {
+            console.error('Error building user profile picutre:', error);
+            console.error(error.stack); // log error stack trace for debugging purposes
+        }
+    },
+
     buildStats: async () => {
         try {
             const stats = await api.getUserStats();
             const weekStats = await api.getUserWeekStats();
             if (stats.code === 200 && weekStats.code === 200) {
-                console.log(weekStats);
                 const element = document.getElementById('week-tracked-time');
                 const lastWeekElement = document.getElementById('last-week-tracked-time');
                 element.innerText = `${weekStats.data} Minutes`;
@@ -84,7 +107,6 @@ const ui = {
             tasksContainer.appendChild(currentTaskContent);
             remainingTasks.unshift(firstIncompleteTask);
             const tasksToDisplay = remainingTasks;
-            console.log(tasksToDisplay);
             tasksToDisplay.forEach(task => {
                 const article = createTaskElement('article', 'ce-tasks__task');
 
