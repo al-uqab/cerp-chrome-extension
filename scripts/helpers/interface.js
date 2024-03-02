@@ -33,7 +33,7 @@ const ui = {
     setUser: () => {
         const usernameElement = document.getElementById('userName');
         if (usernameElement) {
-            usernameElement.textContent = storageData.userName;
+            usernameElement.textContent = `Hello, ${storageData.userName}`;
             return true;
         }
         return false;
@@ -92,7 +92,7 @@ const ui = {
             const taskSubTasks = tasks.data.subtasks;
 
             const firstIncompleteTask = taskSubTasks.find(task => !task.completed);
-            const remainingTasks = taskSubTasks.filter(task => task !== firstIncompleteTask);
+            // const remainingTasks = taskSubTasks.filter(task => task !== firstIncompleteTask);
 
             const currentTaskContent = document.querySelector('.ce-task__title--main');
             const currentTaskTitle = document.querySelector('.ce-task__title--task');
@@ -105,9 +105,9 @@ const ui = {
             currentTaskId = tasks.data.id;
 
             tasksContainer.appendChild(currentTaskContent);
-            remainingTasks.unshift(firstIncompleteTask);
-            const tasksToDisplay = remainingTasks;
-            tasksToDisplay.forEach(task => {
+            // remainingTasks.unshift(firstIncompleteTask);
+            // const tasksToDisplay = remainingTasks;
+            taskSubTasks.forEach(task => {
                 const article = createTaskElement('article', 'ce-tasks__task');
 
                 const h5 = createTaskElement('h5', 'ce-task__title');
