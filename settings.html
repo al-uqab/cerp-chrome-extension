@@ -19,10 +19,10 @@
         </div>
         <nav class="ce-timetracking__user-info">
             <h2 id="userName" class="ce-timetracking__username">Guest User</h2>
-            <a href="javascript:void(0)" class="ce-timetracking__link">
-                <img alt="sync icon" src="images/icons/sync.svg">
-            </a>
-            <a href="javascript:void(0)" class="ce-timetracking__link">
+            <span class="ce-timetracking__link">
+                <img id="sync-icon" alt="sync icon" src="images/icons/sync.svg">
+            </span>
+            <a href="./settings.html" class="ce-timetracking__link">
                 <img alt="settings icon" src="images/icons/settings.svg">
             </a>
         </nav>
@@ -41,7 +41,7 @@
         </div>
     </section>
     <section class="ce-settings__section">
-        <div class="ce-settings__item">
+        <div id="sync" class="ce-settings__item">
             <div class="ce-settings__item--content">
                 <img alt="" class="ce-settings__item--icon"
                      src="images/icons/settings-sync.svg">

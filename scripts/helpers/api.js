@@ -260,18 +260,37 @@ const api = {
 
                 const currentDateTime = new Date().toISOString();
                 storage.setValues({ lastSynced: currentDateTime });
+
+                return true;
             } else {
                 console.error('Error sending task time:', response.status); // Handle error cases
+
+                const storedFailedTasks = storage.getValues().failedTasks || [];
+                storedFailedTasks.push({ taskId, loggedMinutes: elapsedMinutes });
+                storage.setValues({ failedTasks: storedFailedTasks });
             }
         } catch (error) {
             console.error('Error:', error); // Handle fetch or other errors
+
+            const storedFailedTasks = storage.getValues().failedTasks || [];
+            storedFailedTasks.push({ taskId, loggedMinutes: elapsedMinutes });
+            storage.setValues({ failedTasks: storedFailedTasks });
         }
     },
 
-    sendDailyReport: async () => {
-        try {
-        } catch (error) {
-            console.error('Error Syncing:', error); // Handle fetch or other errors
+    syncTasks: async () => {
+        const storedFailedTasks = storage.getValues().failedTasks || [];
+
+        if (storedFailedTasks.length > 0) {
+            for (const { taskId, loggedMinutes } of storedFailedTasks) {
+                const success = await api.sendTaskTime(taskId, loggedMinutes);
+
+                if (success) {
+                    // Remove the successfully synced task from the array
+                    const updatedFailedTasks = storedFailedTasks.filter(task => task.taskId !== taskId);
+                    storage.setValues({ failedTasks: updatedFailedTasks });
+                }
+            }
         }
     }
 };

@@ -2,8 +2,18 @@
 
 import createStopwatch from './helpers/stopwatch.js';
 import ui from './helpers/interface.js';
+import storage from './helpers/storage.js';
 
 ui.injectPreloader();
+
+const checkIfFailedSync = () => {
+    const storageData = storage.getValues();
+    if (storageData.failedTasks && storageData.failedTasks.length > 0) {
+        const syncIcon = document.getElementById('sync-icon');
+        syncIcon.src = 'images/icons/sync-exclamation-white.svg';
+    }
+}
+checkIfFailedSync();
 
 const stopwatch = createStopwatch();
 
@@ -45,6 +55,7 @@ const initializeSessionControls = () => {
     const handleEndButtonClick = () => {
         stopwatch.resetStopwatch();
         pausedStyles();
+        checkIfFailedSync();
     };
 
     startSessionButton.addEventListener('click', handleStartButtonClick);

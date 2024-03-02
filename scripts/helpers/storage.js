@@ -14,11 +14,12 @@ const storage = {
             userRole: localStorage.getItem('userRole') || '',
             memberSince: localStorage.getItem('memberSince') || '',
             userProfilePicture: sessionStorage.getItem('userProfilePicture') || '',
-            lastSynced: localStorage.getItem('lastSynced') || ''
+            lastSynced: localStorage.getItem('lastSynced') || '',
+            failedTasks: getValidJSON('failedTasks') || []
         };
     },
 
-    setValues: ({ token = '', userId = '', userFullName = '', userName = '', userRole = '', memberSince = '', userProfilePicture = '', lastSynced = '' }) => {
+    setValues: ({ token = '', userId = '', userFullName = '', userName = '', userRole = '', memberSince = '', userProfilePicture = '', lastSynced = '', failedTasks = [] }) => {
         if (typeof localStorage === 'undefined') {
             console.error('localStorage is not available in this context.');
             return;
@@ -48,6 +49,9 @@ const storage = {
         if (lastSynced) {
             localStorage.setItem('lastSynced', lastSynced);
         }
+        if (failedTasks.length > 0) {
+            setJSON('failedTasks', failedTasks);
+        }
     },
 
     clear: () => {
@@ -64,7 +68,27 @@ const storage = {
         localStorage.removeItem('memberSince');
         sessionStorage.removeItem('userProfilePicture');
         localStorage.removeItem('lastSynced');
+        localStorage.removeItem('failedTasks');
     },
+};
+
+const getValidJSON = (key) => {
+    try {
+        const jsonString = localStorage.getItem(key);
+        return jsonString ? JSON.parse(jsonString) : null;
+    } catch (error) {
+        console.error(`Error parsing JSON for key ${key}:`, error);
+        return null;
+    }
+};
+
+const setJSON = (key, value) => {
+    try {
+        const jsonString = JSON.stringify(value);
+        localStorage.setItem(key, jsonString);
+    } catch (error) {
+        console.error(`Error storing JSON for key ${key}:`, error);
+    }
 };
 
 export default storage;

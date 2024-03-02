@@ -4,3 +4,8 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+#sync-icon {
+    width: 15px;
+    height: 15px;
+}
