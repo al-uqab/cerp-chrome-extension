@@ -187,6 +187,36 @@ const api = {
         }
     },
 
+    getUserWeekSessions: async () => {
+        try {
+            const today = new Date();
+
+            // Calculate the end date (current day)
+            const endDate = new Date(today);
+
+            // Calculate the start date (most recent Sunday)
+            const startDate = new Date(today);
+            startDate.setDate(today.getDate() - (today.getDay() + 6) % 7); // Set to the most recent Sunday
+
+            // Format the dates as YYYY-MM-DD
+            const formattedTo = formatDate(endDate);
+            const formattedFrom = formatDate(startDate);
+
+            const endpoint = `${BASE_URL}/time-trackings/user/${storageData.userId}/sessions?from=${formattedFrom}&to=${formattedTo}`;
+
+            const response = await fetch(endpoint, {
+                method: 'GET',
+                headers: getAuthHeader(),
+            });
+
+            const stats = await handleFetchErrors(response);
+            return stats;
+        } catch (error) {
+            console.error('Error fetching sessions:', error);
+            return [];
+        }
+    },
+
 
     fetchSessions: async () => {
         try {

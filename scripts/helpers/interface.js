@@ -67,11 +67,14 @@ const ui = {
         try {
             const stats = await api.getUserStats();
             const weekStats = await api.getUserWeekStats();
-            if (stats.code === 200 && weekStats.code === 200) {
+            const weekSessions = await api.getUserWeekSessions();
+            if (stats.code === 200 && weekStats.code === 200 && weekSessions.code === 200) {
                 const element = document.getElementById('week-tracked-time');
+                const sessionsElement = document.getElementById('week-tracked-sessions');
                 const lastWeekElement = document.getElementById('last-week-tracked-time');
                 element.innerText = `${weekStats.data} Minutes`;
                 lastWeekElement.innerText = `${stats.data} Minutes`;
+                sessionsElement.innerText = `${weekSessions.data.length} Sessions`;
                 return;
             }
         } catch (error) {
