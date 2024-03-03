@@ -113,6 +113,12 @@ body#ce-extension * {
     justify-content: center;
 }
 
+#main-task-container {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
 .ce-task__title--main {
     opacity: 0.75;
     font-weight: 400;
@@ -145,6 +151,7 @@ body#ce-extension * {
 }
 
 .ce-task__title--main {
+    flex-grow: 1;
     align-items: center;
     color: #fff;
     column-gap: 5px;
@@ -200,6 +207,7 @@ body#ce-extension * {
     width: 100%;
     padding-right: 20px;
     padding-left: 20px;
+    padding-bottom: 15px;
     display: flex;
     flex-direction: column;
     row-gap: 15px;
@@ -245,7 +253,8 @@ body#ce-extension * {
     width: 32%;
 }
 
-.ce-charts__card--title {
+.ce-charts__card--title,
+.ce-sessions__recent--activity {
     align-items: center;
     color: #e42256;
     display: flex;
@@ -254,6 +263,13 @@ body#ce-extension * {
     font-weight: 700;
     justify-content: space-between;
     margin: 0 0 10px;
+}
+
+.ce-sessions__recent--activity {
+    color: #0d223f;
+    margin: 0;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .ce-charts__card--content {

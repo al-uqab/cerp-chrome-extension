@@ -107,7 +107,26 @@ const ui = {
 
             currentTaskId = tasks.data.id;
 
-            tasksContainer.appendChild(currentTaskContent);
+            const userAccountIcon = document.createElement('img');
+            userAccountIcon.classList.add('ce-user-details__link-icon');
+            userAccountIcon.setAttribute('width', '12');
+            userAccountIcon.setAttribute('height', '12');
+            userAccountIcon.setAttribute('src', 'images/icons/external-link-white.svg');
+
+            const accountLink = document.createElement('a');
+            accountLink.setAttribute('id', 'account-link');
+            accountLink.setAttribute('href', 'https://app.contenterp.com/');
+            accountLink.setAttribute('target', '_blank');
+            accountLink.appendChild(userAccountIcon);
+
+            const container = document.createElement('div');
+
+            container.setAttribute('id', 'main-task-container');
+            container.appendChild(currentTaskContent);
+            container.appendChild(accountLink);
+
+            tasksContainer.appendChild(container);
+
             // remainingTasks.unshift(firstIncompleteTask);
             // const tasksToDisplay = remainingTasks;
             taskSubTasks.forEach(task => {
