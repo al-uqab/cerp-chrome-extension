@@ -95,7 +95,7 @@ const createStopwatch = () => {
             if (resumedBeforePopupDismiss) {
                 startingPoint = new Date().getTime();
             }
-            
+
             if (manualStart) {
                 storageData.pausedAt = null;
                 resumedBeforePopupDismiss = true;
@@ -134,7 +134,7 @@ const createStopwatch = () => {
 
             return isRunning;
         } catch (error) {
-            console.error('Error occurred:', error);
+            console.log('Error occurred:', error);
         }
 
     };

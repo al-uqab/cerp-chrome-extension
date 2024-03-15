@@ -18,7 +18,7 @@ const ui = {
                 document.documentElement.appendChild(preloader);
             })
             .catch(error => {
-                console.error('Error fetching preloader HTML:', error);
+                console.log('Error fetching preloader HTML:', error);
             });
     },
 
@@ -58,8 +58,8 @@ const ui = {
                 profilePictureElement.src = userProfilePicture;
             }
         } catch (error) {
-            console.error('Error building user profile picutre:', error);
-            console.error(error.stack); // log error stack trace for debugging purposes
+            console.log('Error building user profile picutre:', error);
+            console.log(error.stack); // log error stack trace for debugging purposes
         }
     },
 
@@ -78,8 +78,8 @@ const ui = {
                 return;
             }
         } catch (error) {
-            console.error('Error building stats:', error);
-            console.error(error.stack); // log error stack trace for debugging purposes
+            console.log('Error building stats:', error);
+            console.log(error.stack); // log error stack trace for debugging purposes
         }
     },
 
@@ -154,8 +154,8 @@ const ui = {
                 tasksContainer.appendChild(article);
             });
         } catch (error) {
-            console.error('Error building tasks:', error);
-            console.error(error.stack); // log error stack trace for debugging purposes
+            console.log('Error building tasks:', error);
+            console.log(error.stack); // log error stack trace for debugging purposes
         }
 
         return currentTaskId;
@@ -180,8 +180,8 @@ const ui = {
                 pastSessionsContainer.appendChild(sessionElement);
             });
         } catch (error) {
-            console.error('Error building sessions:', error);
-            console.error(error.stack); // log error stack trace for debugging purposes
+            console.log('Error building sessions:', error);
+            console.log(error.stack); // log error stack trace for debugging purposes
         }
     },
 

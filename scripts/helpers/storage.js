@@ -21,7 +21,7 @@ const storage = {
 
     setValues: ({ token = '', userId = '', userFullName = '', userName = '', userRole = '', memberSince = '', userProfilePicture = '', lastSynced = '', failedTasks = [] }) => {
         if (typeof localStorage === 'undefined') {
-            console.error('localStorage is not available in this context.');
+            console.log('localStorage is not available in this context.');
             return;
         }
 
@@ -56,7 +56,7 @@ const storage = {
 
     clear: () => {
         if (typeof localStorage === 'undefined') {
-            console.error('localStorage is not available in this context.');
+            console.log('localStorage is not available in this context.');
             return;
         }
 
@@ -77,7 +77,7 @@ const getValidJSON = (key) => {
         const jsonString = localStorage.getItem(key);
         return jsonString ? JSON.parse(jsonString) : null;
     } catch (error) {
-        console.error(`Error parsing JSON for key ${key}:`, error);
+        console.log(`Error parsing JSON for key ${key}:`, error);
         return null;
     }
 };
@@ -87,7 +87,7 @@ const setJSON = (key, value) => {
         const jsonString = JSON.stringify(value);
         localStorage.setItem(key, jsonString);
     } catch (error) {
-        console.error(`Error storing JSON for key ${key}:`, error);
+        console.log(`Error storing JSON for key ${key}:`, error);
     }
 };
 

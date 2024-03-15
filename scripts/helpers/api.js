@@ -55,7 +55,7 @@ const api = {
             }
         } catch (error) {
             ui.removePreloader();
-            console.error('Error during login:', error);
+            console.log('Error during login:', error);
             return { success: false, message: 'An error occurred during login' };
         }
     },
@@ -79,7 +79,7 @@ const api = {
                 return { success: false, message: 'Invalid user id', response: responseData };
             }
         } catch (error) {
-            console.error('Error during getting user settings:', error);
+            console.log('Error during getting user settings:', error);
             return { success: false, message: 'An error occurred during getting user settings' };
         }
     },
@@ -100,13 +100,13 @@ const api = {
                 if (responseData.code === 200) {
                     return window.location.href = 'index.html'; // Redirect to login page
                 } else {
-                    console.error('Logout failed:', responseData.message); // Handle unsuccessful logout
+                    console.log('Logout failed:', responseData.message); // Handle unsuccessful logout
                 }
             } else {
-                console.error('Error:', response.status); // Handle other HTTP errors
+                console.log('Error:', response.status); // Handle other HTTP errors
             }
         } catch (error) {
-            console.error('Error:', error); // Handle fetch or other errors
+            console.log('Error:', error); // Handle fetch or other errors
         }
         ui.removePreloader();
         return window.location.href = 'index.html'; // Redirect to login page
@@ -121,7 +121,7 @@ const api = {
             const tasks = await handleFetchErrors(response);
             return tasks;
         } catch (error) {
-            console.error('Error fetching tasks:', error);
+            console.log('Error fetching tasks:', error);
             return [];
         }
     },
@@ -152,7 +152,7 @@ const api = {
             const stats = await handleFetchErrors(response);
             return stats;
         } catch (error) {
-            console.error('Error fetching sessions:', error);
+            console.log('Error fetching sessions:', error);
             return [];
         }
     },
@@ -182,7 +182,7 @@ const api = {
             const stats = await handleFetchErrors(response);
             return stats;
         } catch (error) {
-            console.error('Error fetching sessions:', error);
+            console.log('Error fetching sessions:', error);
             return [];
         }
     },
@@ -212,7 +212,7 @@ const api = {
             const stats = await handleFetchErrors(response);
             return stats;
         } catch (error) {
-            console.error('Error fetching sessions:', error);
+            console.log('Error fetching sessions:', error);
             return [];
         }
     },
@@ -227,7 +227,7 @@ const api = {
             const sessions = await handleFetchErrors(response);
             return sessions;
         } catch (error) {
-            console.error('Error fetching sessions:', error);
+            console.log('Error fetching sessions:', error);
             return [];
         }
     },
@@ -243,10 +243,10 @@ const api = {
             if (response.ok) {
                 const responseData = await response.json();
             } else {
-                console.error('Error starting task:', response.status); // Handle error cases
+                console.log('Error starting task:', response.status); // Handle error cases
             }
         } catch (error) {
-            console.error('Error:', error); // Handle fetch or other errors
+            console.log('Error:', error); // Handle fetch or other errors
         }
     },
 
@@ -264,14 +264,14 @@ const api = {
 
                 return true;
             } else {
-                console.error('Error sending task time:', response.status); // Handle error cases
+                console.log('Error sending task time:', response.status); // Handle error cases
 
                 const storedFailedTasks = storage.getValues().failedTasks || [];
                 storedFailedTasks.push({ taskId, loggedMinutes: elapsedMinutes });
                 storage.setValues({ failedTasks: storedFailedTasks });
             }
         } catch (error) {
-            console.error('Error:', error); // Handle fetch or other errors
+            console.log('Error:', error); // Handle fetch or other errors
 
             const storedFailedTasks = storage.getValues().failedTasks || [];
             storedFailedTasks.push({ taskId, loggedMinutes: elapsedMinutes });
